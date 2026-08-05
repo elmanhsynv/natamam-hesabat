@@ -47,7 +47,6 @@
             max-width: 130px;
         }
 
-        /* YENİ: Yüklənmə ekranı üçün dizayn */
         #loadingScreen {
             text-align: center;
             color: var(--yellow);
@@ -363,13 +362,13 @@
         <img src="natamam-logo.png" alt="Natamam Podcast Logo">
     </div>
 
-    <!-- YENİ: Başlanğıc Yüklənmə Ekranı (Splash Screen) -->
+    <!-- Başlanğıc Yüklənmə Ekranı -->
     <div id="loadingScreen">
         <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem;"></i>
         <p>Sistem yoxlanılır...</p>
     </div>
 
-    <!-- 1. GİRİŞ (LOGIN) EKRANI (Əvvəlcədən gizlədilib, ancaq lazımsa açılacaq) -->
+    <!-- 1. GİRİŞ (LOGIN) EKRANI -->
     <div id="loginScreen" class="card hidden">
         <h2 style="justify-content: center; border: none;"><i class="fa-solid fa-shield-halved"></i> Sistemə Giriş</h2>
         
@@ -384,7 +383,7 @@
         <button id="btnLogin">Sistemə Daxil Ol</button>
     </div>
 
-    <!-- 2. ƏSAS PROQRAM (Gizlidir) -->
+    <!-- 2. ƏSAS PROQRAM -->
     <div id="mainAppScreen" class="hidden">
         
         <div style="text-align: right; color: #aaa; font-size: 0.85rem; margin-bottom: 10px;">
@@ -503,7 +502,7 @@
 
     let currentUserDisplayName = "";
 
-    // Dəyişənlər
+    // GİRİŞ MƏNTİQİ
     const loadingScreen = document.getElementById('loadingScreen');
     const loginScreen = document.getElementById('loginScreen');
     const mainAppScreen = document.getElementById('mainAppScreen');
@@ -514,10 +513,8 @@
     const loggedInUserName = document.getElementById('loggedInUserName');
     const payerName = document.getElementById('payerName');
     
-    // YENİ: Auth yoxlanışı bitdikdə Loading ekranını gizlədirik
     onAuthStateChanged(auth, (user) => {
-        loadingScreen.classList.add('hidden'); // Yüklənməni bağla
-        
+        loadingScreen.classList.add('hidden');
         if (user) {
             if (user.email.toLowerCase().includes("natavan")) {
                 currentUserDisplayName = "Natavan";
@@ -529,10 +526,10 @@
             if(!payerName.value) payerName.value = currentUserDisplayName;
 
             loginScreen.classList.add('hidden');
-            mainAppScreen.classList.remove('hidden'); // Əsas paneli aç
+            mainAppScreen.classList.remove('hidden');
         } else {
             mainAppScreen.classList.add('hidden');
-            loginScreen.classList.remove('hidden'); // Login panelini aç
+            loginScreen.classList.remove('hidden');
         }
     });
 
@@ -560,7 +557,7 @@
         await signOut(auth);
     });
 
-    // --- AVTOMATİK GPS ---
+    // AVTOMATİK GPS 
     const btnGPS = document.getElementById('btnGPS');
     const locationInput = document.getElementById('locationInput');
 
@@ -585,7 +582,7 @@
         }
     });
 
-    // --- CHECK-IN / CHECK-OUT ---
+    // CHECK-IN / CHECK-OUT
     let timerInterval;
     const checkInBtn = document.getElementById('btnCheckIn');
     const checkOutBtn = document.getElementById('btnCheckOut');
@@ -659,7 +656,6 @@
             
             alert(`Çəkiliş bitdi!\nMəkanda keçirilən vaxt: ${exactDuration}`);
             
-            // YENİ: Səhifəni yeniləmək əvəzinə formanı sıfırlayırıq (Reload ləğv edildi)
             document.getElementById('checkInSection').classList.remove('hidden');
             document.getElementById('checkOutSection').classList.add('hidden');
             locationInput.value = '';
@@ -693,7 +689,7 @@
         }, 1000);
     }
 
-    // --- DASHBOARD VƏ ARXİV ---
+    // DASHBOARD VƏ ARXİV
     const btnOpenArchive = document.getElementById('btnOpenArchive');
     const btnCloseArchive = document.getElementById('btnCloseArchive');
     const archiveModal = document.getElementById('archiveModal');
@@ -799,7 +795,7 @@
         }
     }
 
-    // --- PDF ÇIXARIŞ ---
+    // --- YENİLƏNMİŞ VƏ DÜZƏLDİLMİŞ PDF ÇIXARIŞ ---
     btnDownloadPDF.addEventListener('click', () => {
         if(currentArchiveData.length === 0) return alert("Hesabat üçün məlumat tapılmadı.");
 
@@ -809,15 +805,15 @@
 
         let tableHTML = `<tr style="background-color: #f2f2f2; color: #333;">`;
         if(currentTab === 'visits') {
-            tableHTML += `<th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Məkan</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Giriş</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Çıxış</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Müddət</th></tr>`;
+            tableHTML += `<th style="width: 35%; padding: 10px; border: 1px solid #ddd; text-align: left;">Məkan</th><th style="width: 25%; padding: 10px; border: 1px solid #ddd; text-align: left;">Giriş</th><th style="width: 25%; padding: 10px; border: 1px solid #ddd; text-align: left;">Çıxış</th><th style="width: 15%; padding: 10px; border: 1px solid #ddd; text-align: left;">Müddət</th></tr>`;
             currentArchiveData.forEach(item => {
-                tableHTML += `<tr><td style="padding: 10px; border: 1px solid #ddd;">${item.location}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkIn_Time}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkOut_Time || 'Davam edir'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.duration_spent || '-'}</td></tr>`;
+                tableHTML += `<tr style="page-break-inside: avoid; break-inside: avoid;"><td style="padding: 10px; border: 1px solid #ddd;">${item.location}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkIn_Time}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkOut_Time || 'Davam edir'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.duration_spent || '-'}</td></tr>`;
             });
         } else {
-            tableHTML += `<th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Məbləğ</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Tarix</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Ödəyən</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Qəbul Edən</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Növ</th></tr>`;
+            tableHTML += `<th style="width: 15%; padding: 10px; border: 1px solid #ddd; text-align: left;">Məbləğ</th><th style="width: 25%; padding: 10px; border: 1px solid #ddd; text-align: left;">Tarix</th><th style="width: 20%; padding: 10px; border: 1px solid #ddd; text-align: left;">Ödəyən</th><th style="width: 20%; padding: 10px; border: 1px solid #ddd; text-align: left;">Qəbul Edən</th><th style="width: 20%; padding: 10px; border: 1px solid #ddd; text-align: left;">Növ</th></tr>`;
             currentArchiveData.forEach(item => {
                 const pType = item.payment_type === 'monthly' ? `Aylıq (${item.paid_for_month})` : `Gündəlik`;
-                tableHTML += `<tr><td style="padding: 10px; border: 1px solid #ddd;">${item.amount} AZN</td><td style="padding: 10px; border: 1px solid #ddd;">${item.created_at}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.payer || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.receiver || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${pType}</td></tr>`;
+                tableHTML += `<tr style="page-break-inside: avoid; break-inside: avoid;"><td style="padding: 10px; border: 1px solid #ddd;">${item.amount} AZN</td><td style="padding: 10px; border: 1px solid #ddd;">${item.created_at}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.payer || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.receiver || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${pType}</td></tr>`;
             });
         }
 
@@ -825,22 +821,26 @@
         
         const reportElement = document.createElement('div');
         reportElement.innerHTML = `
-            <div style="padding: 40px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #000; background: #fff; line-height: 1.5;">
+            <div style="padding: 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #000; background: #fff; line-height: 1.5;">
                 <div style="text-align: center; border-bottom: 2px solid #FFCC00; padding-bottom: 20px; margin-bottom: 20px;">
                     <h1 style="color: #1e1e1e; margin: 0; font-size: 26px;">Natamam Podcast</h1>
                     <h3 style="color: #555; margin: 5px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
                     <p style="color: #888; margin: 5px 0 0 0; font-size: 14px;">Mövzu: ${reportTitle}</p>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">${tableHTML}</table>
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; word-wrap: break-word;">
+                    ${tableHTML}
+                </table>
                 <div style="margin-top: 30px; text-align: right; font-size: 12px; color: #888;">Hesabatın çıxarılma tarixi: ${new Date().toLocaleString('az-AZ')}</div>
             </div>`;
 
+        // PDF-in formatını 'landscape' edirik ki, məlumatlar sığsın və 'pagebreak' ilə kəsilmələrin qarşısını alırıq.
         const opt = {
-            margin: 10,
+            margin: [10, 10, 10, 10],
             filename: `Natamam_Hesabat_${currentTab}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+            pagebreak: { mode: ['css', 'legacy'] }
         };
 
         html2pdf().from(reportElement).set(opt).save().then(() => {
@@ -849,7 +849,7 @@
         });
     });
 
-    // --- ÖDƏNİŞ MƏNTİQİ ---
+    // ÖDƏNİŞ MƏNTİQİ
     const paymentRadios = document.getElementsByName('paymentType');
     const monthSelector = document.getElementById('monthSelector');
     const paymentMonth = document.getElementById('paymentMonth');
