@@ -11,9 +11,8 @@
     <meta name="theme-color" content="#1e1e1e">
     <link rel="apple-touch-icon" href="natamam-logo.png">
     
-    <!-- FontAwesome və html2pdf -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root {
@@ -353,6 +352,44 @@
             font-size: 0.75rem;
             color: #aaa;
         }
+
+        /* YENİ: Hesabat Paneli Üçün Xüsusi Genişlik */
+        #reportModal .modal-content {
+            max-width: 900px;
+            width: 95%;
+        }
+
+        #reportContainer {
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Cədvəl Dizaynı */
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 600px;
+        }
+
+        .report-table th {
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .report-table td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            color: #222;
+        }
     </style>
 </head>
 <body>
@@ -374,7 +411,7 @@
         
         <label>İstifadəçi seçin</label>
         <select id="userSelect">
-            <option value="admin@natamam.com">Elman H.</option>
+            <option value="admin@natamam.com">Elman</option>
             <option value="natavan@natamam.com">Natavan</option>
         </select>
 
@@ -425,13 +462,17 @@
             </div>
 
             <label for="payerName">Ödənişi edən şəxs</label>
-            <input type="text" id="payerName" placeholder="Məs: Elman H.">
+            <input type="text" id="payerName" placeholder="Məs: Elman">
             
             <label for="receiverName">Ödənişi qəbul edən şəxs</label>
             <input type="text" id="receiverName" placeholder="Məs: Məkan rəhbəri">
 
             <label for="paymentAmount">Məbləğ (AZN)</label>
             <input type="number" id="paymentAmount" placeholder="Məs: 160">
+
+            <!-- YENİ: Qeyd hissəsi (Zəruri deyil) -->
+            <label for="paymentNote">Qeyd (İstəyə bağlı)</label>
+            <input type="text" id="paymentNote" placeholder="Əlavə qeydlərinizi yaza bilərsiniz...">
 
             <button id="btnSavePayment">Ödənişi Yadda Saxla</button>
         </div>
@@ -468,13 +509,26 @@
             <button class="tab-btn" data-type="payments"><i class="fa-solid fa-file-invoice-dollar"></i> Ödənişlər</button>
         </div>
 
-        <button id="btnDownloadPDF" class="btn-outline" style="border-color: #4CAF50; color: #4CAF50; margin-bottom: 15px; width: 100%;">
-            <i class="fa-solid fa-file-pdf"></i> PDF Hesabat Yüklə
+        <!-- YENİ: PDF əvəzinə Sayt İçi Hesabat Düyməsi -->
+        <button id="btnViewReport" class="btn-outline" style="border-color: #4CAF50; color: #4CAF50; margin-bottom: 15px; width: 100%;">
+            <i class="fa-solid fa-file-lines"></i> Hesabata Bax
         </button>
         
         <ul id="historyList" class="history-list">
             <!-- Arxivlər -->
         </ul>
+    </div>
+</div>
+
+<!-- YENİ: Hesabatı Göstərən Pəncərə (Modal) -->
+<div id="reportModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn" id="btnCloseReport">&times;</span>
+        <h2 style="border-bottom: 1px solid #444; padding-bottom: 10px; margin-top:0;"><i class="fa-solid fa-file-lines"></i> Rəsmi Hesabat</h2>
+        
+        <div id="reportContainer">
+            <!-- Cədvəl bura avtomatik yüklənəcək -->
+        </div>
     </div>
 </div>
 
@@ -519,7 +573,7 @@
             if (user.email.toLowerCase().includes("natavan")) {
                 currentUserDisplayName = "Natavan";
             } else {
-                currentUserDisplayName = "Elman H.";
+                currentUserDisplayName = "Elman";
             }
 
             loggedInUserName.textContent = currentUserDisplayName;
@@ -695,7 +749,12 @@
     const archiveModal = document.getElementById('archiveModal');
     const historyList = document.getElementById('historyList');
     const tabBtns = document.querySelectorAll('.tab-btn');
-    const btnDownloadPDF = document.getElementById('btnDownloadPDF');
+    
+    // YENİ DƏYİŞƏNLƏR: Sayt İçi Hesabat Paneli
+    const btnViewReport = document.getElementById('btnViewReport');
+    const reportModal = document.getElementById('reportModal');
+    const btnCloseReport = document.getElementById('btnCloseReport');
+    const reportContainer = document.getElementById('reportContainer');
 
     let currentTab = 'visits';
     let currentArchiveData = [];
@@ -706,6 +765,13 @@
     });
 
     btnCloseArchive.addEventListener('click', () => { archiveModal.classList.add('hidden'); });
+    btnCloseReport.addEventListener('click', () => { reportModal.classList.add('hidden'); });
+
+    // Modaldan kənara basdıqda bağlamaq üçün
+    window.addEventListener('click', (e) => {
+        if (e.target === archiveModal) archiveModal.classList.add('hidden');
+        if (e.target === reportModal) reportModal.classList.add('hidden');
+    });
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -768,6 +834,7 @@
                 } else {
                     li.className = 'history-item payment';
                     const payTypeStr = data.payment_type === 'monthly' ? `Aylıq (${data.paid_for_month})` : `Gündəlik`;
+                    const noteStr = data.note ? `<span><i class="fa-regular fa-comment-dots"></i> Qeyd: ${data.note}</span>` : '';
                     
                     li.innerHTML = `
                         ${userTagHtml}
@@ -776,6 +843,7 @@
                         <span><i class="fa-solid fa-user"></i> Ödəyən: ${data.payer || '-'}</span>
                         <span><i class="fa-solid fa-user-check"></i> Qəbul edən: ${data.receiver || '-'}</span>
                         <span><i class="fa-solid fa-tag"></i> Növ: ${payTypeStr}</span>
+                        ${noteStr}
                     `;
                 }
                 historyList.appendChild(li);
@@ -795,55 +863,54 @@
         }
     }
 
-    // --- YENİLƏNMİŞ VƏ TAM DÜZƏLDİLMİŞ PDF ÇIXARIŞ ---
-    btnDownloadPDF.addEventListener('click', () => {
+    // --- YENİ: SAYT İÇİ HESABATIN GÖSTƏRİLMƏSİ MƏNTİQİ ---
+    btnViewReport.addEventListener('click', () => {
         if(currentArchiveData.length === 0) return alert("Hesabat üçün məlumat tapılmadı.");
-
-        const originalBtnHtml = btnDownloadPDF.innerHTML;
-        btnDownloadPDF.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PDF Hazırlanır...';
-        btnDownloadPDF.disabled = true;
 
         let tableHTMLHead = '';
         let tableHTMLBody = '';
 
         if(currentTab === 'visits') {
             tableHTMLHead = `
-                <tr style="background-color: #f4f4f4; color: #333;">
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 35%;">Məkan</th>
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Giriş</th>
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Çıxış</th>
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 15%;">Müddət</th>
+                <tr>
+                    <th>Məkan</th>
+                    <th>Giriş</th>
+                    <th>Çıxış</th>
+                    <th>Müddət</th>
                 </tr>
             `;
             currentArchiveData.forEach(item => {
                 tableHTMLBody += `
                     <tr>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #222;">${item.location}</td>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${item.checkIn_Time}</td>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${item.checkOut_Time || 'Davam edir...'}</td>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #222; font-weight: bold;">${item.duration_spent || '-'}</td>
+                        <td style="font-weight: bold;">${item.location}</td>
+                        <td>${item.checkIn_Time}</td>
+                        <td>${item.checkOut_Time || 'Davam edir...'}</td>
+                        <td>${item.duration_spent || '-'}</td>
                     </tr>
                 `;
             });
         } else {
+            // Ödənişlərə Qeyd sütunu da əlavə edildi
             tableHTMLHead = `
-                <tr style="background-color: #f4f4f4; color: #333;">
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 15%;">Məbləğ</th>
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 20%;">Tarix</th>
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Ödəyən</th>
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Qəbul Edən</th>
-                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 15%;">Növ</th>
+                <tr>
+                    <th>Məbləğ</th>
+                    <th>Tarix</th>
+                    <th>Ödəyən</th>
+                    <th>Qəbul Edən</th>
+                    <th>Növ</th>
+                    <th>Qeyd</th>
                 </tr>
             `;
             currentArchiveData.forEach(item => {
                 const pType = item.payment_type === 'monthly' ? `Aylıq (${item.paid_for_month})` : `Gündəlik`;
                 tableHTMLBody += `
                     <tr>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #222; font-weight: bold;">${item.amount} AZN</td>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${item.created_at}</td>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #222;">${item.payer || '-'}</td>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #222;">${item.receiver || '-'}</td>
-                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${pType}</td>
+                        <td style="font-weight: bold;">${item.amount} AZN</td>
+                        <td>${item.created_at}</td>
+                        <td>${item.payer || '-'}</td>
+                        <td>${item.receiver || '-'}</td>
+                        <td>${pType}</td>
+                        <td>${item.note || '-'}</td>
                     </tr>
                 `;
             });
@@ -851,51 +918,34 @@
 
         const reportTitle = currentTab === 'visits' ? 'Çəkiliş Məkanları Hesabatı' : 'Ödənişlər Hesabatı';
         
-        const reportElement = document.createElement('div');
-        // Əsas sirr buradakı 'width: 1050px' dəyərindədir. PDF ekranı telefona görə daraltmır, standart ölçüdə çəkir.
-        reportElement.innerHTML = `
-            <div style="width: 800px; padding: 20px; font-family: 'Segoe UI', Arial, sans-serif; color: #000; background: #fff; box-sizing: border-box;">
-                <div style="text-align: center; border-bottom: 3px solid #FFCC00; padding-bottom: 15px; margin-bottom: 25px;">
-                    <h1 style="color: #111; margin: 0; font-size: 28px; text-transform: uppercase;">Natamam Podcast</h1>
-                    <h3 style="color: #555; margin: 8px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
-                    <p style="color: #888; margin: 5px 0 0 0; font-size: 14px;">Mövzu: ${reportTitle}</p>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; word-wrap: break-word;">
-                    <thead>
-                        ${tableHTMLHead}
-                    </thead>
-                    <tbody>
-                        ${tableHTMLBody}
-                    </tbody>
-                </table>
-                <div style="margin-top: 30px; text-align: right; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">
-                    Sənədin formalaşdırılma tarixi: ${new Date().toLocaleString('az-AZ')}
-                </div>
-            </div>`;
+        reportContainer.innerHTML = `
+            <div style="text-align: center; border-bottom: 3px solid #FFCC00; padding-bottom: 15px; margin-bottom: 25px;">
+                <h1 style="color: #111; margin: 0; font-size: 24px; text-transform: uppercase;">Natamam Podcast</h1>
+                <h3 style="color: #555; margin: 8px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
+                <p style="color: #888; margin: 5px 0 0 0; font-size: 14px;">Mövzu: ${reportTitle}</p>
+            </div>
+            
+            <table class="report-table">
+                <thead>${tableHTMLHead}</thead>
+                <tbody>${tableHTMLBody}</tbody>
+            </table>
+            
+            <div style="margin-top: 30px; text-align: right; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">
+                Sənədin formalaşdırılma tarixi: ${new Date().toLocaleString('az-AZ')}
+            </div>
+        `;
 
-        const opt = {
-    margin: [15, 10, 15, 10], 
-    filename: `Natamam_Hesabat_${currentTab}.pdf`,
-    image: { type: 'jpeg', quality: 1 },
-    // Genişlik 800-ə salındı
-    html2canvas: { scale: 2, useCORS: true, windowWidth: 800 }, 
-    // orientation portrait olaraq dəyişdirildi
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, 
-    pagebreak: { avoid: 'tr' } 
-};
-
-        html2pdf().from(reportElement).set(opt).save().then(() => {
-            btnDownloadPDF.innerHTML = originalBtnHtml;
-            btnDownloadPDF.disabled = false;
-        });
+        // Hesabat pəncərəsini ekranda göstər
+        reportModal.classList.remove('hidden');
     });
 
-    // ÖDƏNİŞ MƏNTİQİ
+    // ÖDƏNİŞ MƏNTİQİ VƏ YENİ QEYD XANASI
     const paymentRadios = document.getElementsByName('paymentType');
     const monthSelector = document.getElementById('monthSelector');
     const paymentMonth = document.getElementById('paymentMonth');
     const receiverName = document.getElementById('receiverName');
     const paymentAmount = document.getElementById('paymentAmount');
+    const paymentNote = document.getElementById('paymentNote'); // Yeni əlavə edildi
     const btnSavePayment = document.getElementById('btnSavePayment');
 
     paymentRadios.forEach(radio => {
@@ -909,12 +959,18 @@
         const amount = paymentAmount.value.trim();
         const payer = payerName.value.trim();
         const receiver = receiverName.value.trim();
+        const note = paymentNote.value.trim(); // Qeyd dəyəri alındı
 
-        if (!payer || !receiver || !amount) { alert("Bütün xanaları doldurun!"); return; }
+        // Əsas xanalar məcburidir, qeyd isə yox
+        if (!payer || !receiver || !amount) { alert("Xahiş edirik, məbləği və şəxsləri qeyd edin (Qeyd hissəsi istisna olmaqla)."); return; }
 
         let paymentData = {
-            amount: amount, payer: payer, receiver: receiver,
-            payment_type: type, created_at: new Date().toLocaleString('az-AZ'), timestamp: Date.now(),
+            amount: amount, 
+            payer: payer, 
+            receiver: receiver,
+            payment_type: type, 
+            created_at: new Date().toLocaleString('az-AZ'), 
+            timestamp: Date.now(),
             recorded_by: currentUserDisplayName
         };
 
@@ -923,16 +979,30 @@
             paymentData.paid_for_month = paymentMonth.value;
         }
 
+        // Qeyd boş deyilsə, onu da bazaya yaz
+        if (note) {
+            paymentData.note = note;
+        }
+
         try {
             btnSavePayment.disabled = true;
             btnSavePayment.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saxlanılır...';
             await addDoc(collection(db, "payments"), paymentData);
             alert("Ödəniş uğurla qeydə alındı!");
-            paymentAmount.value = ''; paymentMonth.value = ''; receiverName.value = '';
-            btnSavePayment.disabled = false; btnSavePayment.textContent = "Ödənişi Yadda Saxla";
+            
+            // Xanaları sıfırla
+            paymentAmount.value = ''; 
+            paymentMonth.value = ''; 
+            receiverName.value = '';
+            paymentNote.value = ''; 
+            
+            btnSavePayment.disabled = false; 
+            btnSavePayment.textContent = "Ödənişi Yadda Saxla";
         } catch (e) {
-            console.error(e); alert("Ödənişi yadda saxlamaq mümkün olmadı.");
-            btnSavePayment.disabled = false; btnSavePayment.textContent = "Ödənişi Yadda Saxla";
+            console.error(e); 
+            alert("Ödənişi yadda saxlamaq mümkün olmadı.");
+            btnSavePayment.disabled = false; 
+            btnSavePayment.textContent = "Ödənişi Yadda Saxla";
         }
     });
 </script>
