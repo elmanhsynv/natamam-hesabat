@@ -374,7 +374,7 @@
         
         <label>İstifadəçi seçin</label>
         <select id="userSelect">
-            <option value="admin@natamam.com">Elman</option>
+            <option value="admin@natamam.com">Elman H.</option>
             <option value="natavan@natamam.com">Natavan</option>
         </select>
 
@@ -425,7 +425,7 @@
             </div>
 
             <label for="payerName">Ödənişi edən şəxs</label>
-            <input type="text" id="payerName" placeholder="Məs: Elman">
+            <input type="text" id="payerName" placeholder="Məs: Elman H.">
             
             <label for="receiverName">Ödənişi qəbul edən şəxs</label>
             <input type="text" id="receiverName" placeholder="Məs: Məkan rəhbəri">
@@ -519,7 +519,7 @@
             if (user.email.toLowerCase().includes("natavan")) {
                 currentUserDisplayName = "Natavan";
             } else {
-                currentUserDisplayName = "Elman";
+                currentUserDisplayName = "Elman H.";
             }
 
             loggedInUserName.textContent = currentUserDisplayName;
@@ -795,7 +795,7 @@
         }
     }
 
-    // --- YENİLƏNMİŞ VƏ DÜZƏLDİLMİŞ PDF ÇIXARIŞ ---
+    // --- YENİLƏNMİŞ VƏ TAM DÜZƏLDİLMİŞ PDF ÇIXARIŞ ---
     btnDownloadPDF.addEventListener('click', () => {
         if(currentArchiveData.length === 0) return alert("Hesabat üçün məlumat tapılmadı.");
 
@@ -803,44 +803,84 @@
         btnDownloadPDF.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PDF Hazırlanır...';
         btnDownloadPDF.disabled = true;
 
-        let tableHTML = `<tr style="background-color: #f2f2f2; color: #333;">`;
+        let tableHTMLHead = '';
+        let tableHTMLBody = '';
+
         if(currentTab === 'visits') {
-            tableHTML += `<th style="width: 35%; padding: 10px; border: 1px solid #ddd; text-align: left;">Məkan</th><th style="width: 25%; padding: 10px; border: 1px solid #ddd; text-align: left;">Giriş</th><th style="width: 25%; padding: 10px; border: 1px solid #ddd; text-align: left;">Çıxış</th><th style="width: 15%; padding: 10px; border: 1px solid #ddd; text-align: left;">Müddət</th></tr>`;
+            tableHTMLHead = `
+                <tr style="background-color: #f4f4f4; color: #333;">
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 35%;">Məkan</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Giriş</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Çıxış</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 15%;">Müddət</th>
+                </tr>
+            `;
             currentArchiveData.forEach(item => {
-                tableHTML += `<tr style="page-break-inside: avoid; break-inside: avoid;"><td style="padding: 10px; border: 1px solid #ddd;">${item.location}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkIn_Time}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkOut_Time || 'Davam edir'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.duration_spent || '-'}</td></tr>`;
+                tableHTMLBody += `
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #222;">${item.location}</td>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${item.checkIn_Time}</td>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${item.checkOut_Time || 'Davam edir...'}</td>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #222; font-weight: bold;">${item.duration_spent || '-'}</td>
+                    </tr>
+                `;
             });
         } else {
-            tableHTML += `<th style="width: 15%; padding: 10px; border: 1px solid #ddd; text-align: left;">Məbləğ</th><th style="width: 25%; padding: 10px; border: 1px solid #ddd; text-align: left;">Tarix</th><th style="width: 20%; padding: 10px; border: 1px solid #ddd; text-align: left;">Ödəyən</th><th style="width: 20%; padding: 10px; border: 1px solid #ddd; text-align: left;">Qəbul Edən</th><th style="width: 20%; padding: 10px; border: 1px solid #ddd; text-align: left;">Növ</th></tr>`;
+            tableHTMLHead = `
+                <tr style="background-color: #f4f4f4; color: #333;">
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 15%;">Məbləğ</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 20%;">Tarix</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Ödəyən</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 25%;">Qəbul Edən</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left; width: 15%;">Növ</th>
+                </tr>
+            `;
             currentArchiveData.forEach(item => {
                 const pType = item.payment_type === 'monthly' ? `Aylıq (${item.paid_for_month})` : `Gündəlik`;
-                tableHTML += `<tr style="page-break-inside: avoid; break-inside: avoid;"><td style="padding: 10px; border: 1px solid #ddd;">${item.amount} AZN</td><td style="padding: 10px; border: 1px solid #ddd;">${item.created_at}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.payer || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.receiver || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${pType}</td></tr>`;
+                tableHTMLBody += `
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #222; font-weight: bold;">${item.amount} AZN</td>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${item.created_at}</td>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #222;">${item.payer || '-'}</td>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #222;">${item.receiver || '-'}</td>
+                        <td style="padding: 12px; border: 1px solid #ccc; color: #444;">${pType}</td>
+                    </tr>
+                `;
             });
         }
 
         const reportTitle = currentTab === 'visits' ? 'Çəkiliş Məkanları Hesabatı' : 'Ödənişlər Hesabatı';
         
         const reportElement = document.createElement('div');
+        // Əsas sirr buradakı 'width: 1050px' dəyərindədir. PDF ekranı telefona görə daraltmır, standart ölçüdə çəkir.
         reportElement.innerHTML = `
-            <div style="padding: 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #000; background: #fff; line-height: 1.5;">
-                <div style="text-align: center; border-bottom: 2px solid #FFCC00; padding-bottom: 20px; margin-bottom: 20px;">
-                    <h1 style="color: #1e1e1e; margin: 0; font-size: 26px;">Natamam Podcast</h1>
-                    <h3 style="color: #555; margin: 5px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
+            <div style="width: 1050px; padding: 30px; font-family: 'Segoe UI', Arial, sans-serif; color: #000; background: #fff; box-sizing: border-box;">
+                <div style="text-align: center; border-bottom: 3px solid #FFCC00; padding-bottom: 15px; margin-bottom: 25px;">
+                    <h1 style="color: #111; margin: 0; font-size: 28px; text-transform: uppercase;">Natamam Podcast</h1>
+                    <h3 style="color: #555; margin: 8px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
                     <p style="color: #888; margin: 5px 0 0 0; font-size: 14px;">Mövzu: ${reportTitle}</p>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; word-wrap: break-word;">
-                    ${tableHTML}
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; word-wrap: break-word;">
+                    <thead>
+                        ${tableHTMLHead}
+                    </thead>
+                    <tbody>
+                        ${tableHTMLBody}
+                    </tbody>
                 </table>
-                <div style="margin-top: 30px; text-align: right; font-size: 12px; color: #888;">Hesabatın çıxarılma tarixi: ${new Date().toLocaleString('az-AZ')}</div>
+                <div style="margin-top: 30px; text-align: right; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">
+                    Sənədin formalaşdırılma tarixi: ${new Date().toLocaleString('az-AZ')}
+                </div>
             </div>`;
 
-        // PDF-in formatını 'landscape' edirik ki, məlumatlar sığsın və 'pagebreak' ilə kəsilmələrin qarşısını alırıq.
         const opt = {
-            margin: [10, 10, 10, 10],
+            margin: [15, 10, 15, 10], // Yuxarı, sol, aşağı, sağ kənar boşluqları
             filename: `Natamam_Hesabat_${currentTab}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
-            pagebreak: { mode: ['css', 'legacy'] }
+            image: { type: 'jpeg', quality: 1 },
+            // html2canvas-a kənar xətlərin kəsilməməsi üçün məcburi 1050px pəncərə genişliyi veririk
+            html2canvas: { scale: 2, useCORS: true, windowWidth: 1050 }, 
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }, // Geniş (Üfüqi) format
+            pagebreak: { avoid: 'tr' } // Ən vacib kod: Sətirlərin ortadan kəsilməsinin qarşısını alır
         };
 
         html2pdf().from(reportElement).set(opt).save().then(() => {
