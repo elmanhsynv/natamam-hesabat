@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Natamam Podcast - Veb Tətbiq</title>
+    
+    <!-- PWA və App Görünüşü Meta Taqları -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1e1e1e">
+    <link rel="apple-touch-icon" href="natamam-logo.png">
+    
+    <!-- FontAwesome və html2pdf -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --card-bg: #2c2c2c;
+            --yellow: #FFCC00;
+            --text-color: #f5f5f5;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            max-width: 130px;
+        }
+
+        /* YENİ: Yüklənmə ekranı üçün dizayn */
+        #loadingScreen {
+            text-align: center;
+            color: var(--yellow);
+            padding: 50px 0;
+        }
+
+        #loadingScreen p {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--yellow);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            color: var(--yellow);
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px; 
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"], input[type="number"], input[type="month"], input[type="password"], select {
+            width: 100%;
+            height: 48px; 
+            padding: 0 12px; 
+            background-color: #1a1a1a;
+            border: 1px solid #444;
+            color: var(--yellow);
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--yellow);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .btn-icon {
+            background-color: rgba(255, 204, 0, 0.15);
+            border: 2px solid var(--yellow);
+            color: var(--yellow);
+            width: 55px;
+            height: 48px; 
+            padding: 0;
+            border-radius: 5px; 
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.1);
+        }
+
+        .btn-icon:hover {
+            background-color: var(--yellow);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+            transform: translateY(-2px); 
+        }
+
+        .btn-icon:active {
+            transform: translateY(2px);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--yellow);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 10px;
+        }
+
+        button:active {
+            opacity: 0.8;
+        }
+
+        button:disabled {
+            background-color: #555;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #aaa;
+            border: 1px solid #555;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-outline:hover {
+            background-color: #333;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        #timerDisplay {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--yellow);
+            margin: 15px 0;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 95%;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 5px solid var(--yellow);
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover { color: var(--yellow); }
+
+        .dashboard-summary {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .summary-box {
+            flex: 1;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #444;
+        }
+
+        .summary-box h4 {
+            margin: 0 0 5px 0;
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+
+        .summary-box span {
+            color: var(--yellow);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            background: var(--yellow);
+            color: var(--bg-color);
+            border-color: var(--yellow);
+            font-weight: bold;
+        }
+
+        .history-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 45vh;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background-color: #1a1a1a;
+            border-left: 3px solid #555;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .history-item.completed { border-left-color: #4CAF50; }
+        .history-item.active { border-left-color: var(--yellow); }
+        .history-item.payment { border-left-color: #2196F3; }
+
+        .history-item strong {
+            color: var(--yellow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .history-item span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ccc;
+            margin-bottom: 4px;
+        }
+        
+        .user-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #333;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="natamam-logo.png" alt="Natamam Podcast Logo">
+    </div>
+
+    <!-- YENİ: Başlanğıc Yüklənmə Ekranı (Splash Screen) -->
+    <div id="loadingScreen">
+        <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem;"></i>
+        <p>Sistem yoxlanılır...</p>
+    </div>
+
+    <!-- 1. GİRİŞ (LOGIN) EKRANI (Əvvəlcədən gizlədilib, ancaq lazımsa açılacaq) -->
+    <div id="loginScreen" class="card hidden">
+        <h2 style="justify-content: center; border: none;"><i class="fa-solid fa-shield-halved"></i> Sistemə Giriş</h2>
+        
+        <label>İstifadəçi seçin</label>
+        <select id="userSelect">
+            <option value="admin@natamam.com">Elman H.</option>
+            <option value="natavan@natamam.com">Natavan</option>
+        </select>
+
+        <label>PİN Kod</label>
+        <input type="password" id="loginPin" placeholder="******" maxlength="10">
+        <button id="btnLogin">Sistemə Daxil Ol</button>
+    </div>
+
+    <!-- 2. ƏSAS PROQRAM (Gizlidir) -->
+    <div id="mainAppScreen" class="hidden">
+        
+        <div style="text-align: right; color: #aaa; font-size: 0.85rem; margin-bottom: 10px;">
+            <i class="fa-solid fa-user"></i> Xoş gəldin, <strong id="loggedInUserName" style="color:var(--yellow)">...</strong>
+        </div>
+
+        <!-- Məkan və Check-in Bölməsi -->
+        <div class="card">
+            <h2><i class="fa-solid fa-map-location-dot"></i> Çəkiliş Məkanı</h2>
+            
+            <div id="checkInSection">
+                <label for="locationInput">Məkanın adı və ya GPS ilə tapın</label>
+                <div class="input-group">
+                    <input type="text" id="locationInput" placeholder="Məs: Oykos İnkişaf Mərkəzi">
+                    <button class="btn-icon" id="btnGPS" title="Məkanımı tap"><i class="fa-solid fa-location-crosshairs"></i></button>
+                </div>
+                <button id="btnCheckIn">Check-In</button>
+            </div>
+
+            <div id="checkOutSection" class="hidden">
+                <p style="color: #aaa; text-align: center; margin-bottom: 5px;">Məkandasınız: <strong id="currentLocationDisplay" style="color: var(--yellow);"></strong></p>
+                <div id="timerDisplay">00:00:00</div>
+                <button id="btnCheckOut">Check-Out</button>
+            </div>
+        </div>
+
+        <!-- Ödəniş Bölməsi -->
+        <div class="card">
+            <h2><i class="fa-solid fa-wallet"></i> Ödəniş Qeydi</h2>
+            
+            <div class="radio-group">
+                <label><input type="radio" name="paymentType" value="monthly" checked> Aylıq</label>
+                <label><input type="radio" name="paymentType" value="daily"> Gündəlik</label>
+            </div>
+
+            <div id="monthSelector">
+                <label for="paymentMonth">Hansı ayın ödənişidir?</label>
+                <input type="month" id="paymentMonth">
+            </div>
+
+            <label for="payerName">Ödənişi edən şəxs</label>
+            <input type="text" id="payerName" placeholder="Məs: Elman H.">
+            
+            <label for="receiverName">Ödənişi qəbul edən şəxs</label>
+            <input type="text" id="receiverName" placeholder="Məs: Məkan rəhbəri">
+
+            <label for="paymentAmount">Məbləğ (AZN)</label>
+            <input type="number" id="paymentAmount" placeholder="Məs: 160">
+
+            <button id="btnSavePayment">Ödənişi Yadda Saxla</button>
+        </div>
+
+        <button id="btnOpenArchive" class="btn-outline" style="margin-bottom: 15px; border-color: var(--yellow); color: var(--yellow);">
+            <i class="fa-solid fa-chart-line"></i> Dashboard & Arxiv
+        </button>
+
+        <button id="btnLogout" class="btn-outline">
+            <i class="fa-solid fa-right-from-bracket"></i> Hesabdan Çıxış Et
+        </button>
+    </div>
+</div>
+
+<!-- 3. DASHBOARD VƏ ARXİV MODALI -->
+<div id="archiveModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn" id="btnCloseArchive">&times;</span>
+        <h2 style="border-bottom: 1px solid #444; padding-bottom: 10px; margin-top:0;"><i class="fa-solid fa-chart-pie"></i> Statistika & Arxiv</h2>
+        
+        <div class="dashboard-summary">
+            <div class="summary-box">
+                <h4><i class="fa-regular fa-clock"></i> Bu Ay Çəkiliş</h4>
+                <span id="sumTime">0s 0d</span>
+            </div>
+            <div class="summary-box">
+                <h4><i class="fa-solid fa-coins"></i> Bu Ay Ödəniş</h4>
+                <span id="sumMoney">0 AZN</span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-type="visits"><i class="fa-solid fa-video"></i> Çəkilişlər</button>
+            <button class="tab-btn" data-type="payments"><i class="fa-solid fa-file-invoice-dollar"></i> Ödənişlər</button>
+        </div>
+
+        <button id="btnDownloadPDF" class="btn-outline" style="border-color: #4CAF50; color: #4CAF50; margin-bottom: 15px; width: 100%;">
+            <i class="fa-solid fa-file-pdf"></i> PDF Hesabat Yüklə
+        </button>
+        
+        <ul id="historyList" class="history-list">
+            <!-- Arxivlər -->
+        </ul>
+    </div>
+</div>
+
+<!-- Firebase Modular SDK -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { initializeFirestore, persistentLocalCache, persistentSingleTabManager, collection, addDoc, updateDoc, doc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyANPqnaN3sXpM02BB5qKj73ViqKw5nkhpE",
+        authDomain: "natamam-hesabat.firebaseapp.com",
+        projectId: "natamam-hesabat",
+        storageBucket: "natamam-hesabat.firebasestorage.app",
+        messagingSenderId: "12730604191",
+        appId: "1:12730604191:web:cfcb0342877fe3a8d460aa"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    
+    const db = initializeFirestore(app, {
+        localCache: persistentLocalCache({tabManager: persistentSingleTabManager()})
+    });
+
+    let currentUserDisplayName = "";
+
+    // Dəyişənlər
+    const loadingScreen = document.getElementById('loadingScreen');
+    const loginScreen = document.getElementById('loginScreen');
+    const mainAppScreen = document.getElementById('mainAppScreen');
+    const userSelect = document.getElementById('userSelect');
+    const loginPin = document.getElementById('loginPin');
+    const btnLogin = document.getElementById('btnLogin');
+    const btnLogout = document.getElementById('btnLogout');
+    const loggedInUserName = document.getElementById('loggedInUserName');
+    const payerName = document.getElementById('payerName');
+    
+    // YENİ: Auth yoxlanışı bitdikdə Loading ekranını gizlədirik
+    onAuthStateChanged(auth, (user) => {
+        loadingScreen.classList.add('hidden'); // Yüklənməni bağla
+        
+        if (user) {
+            if (user.email.toLowerCase().includes("natavan")) {
+                currentUserDisplayName = "Natavan";
+            } else {
+                currentUserDisplayName = "Elman H.";
+            }
+
+            loggedInUserName.textContent = currentUserDisplayName;
+            if(!payerName.value) payerName.value = currentUserDisplayName;
+
+            loginScreen.classList.add('hidden');
+            mainAppScreen.classList.remove('hidden'); // Əsas paneli aç
+        } else {
+            mainAppScreen.classList.add('hidden');
+            loginScreen.classList.remove('hidden'); // Login panelini aç
+        }
+    });
+
+    btnLogin.addEventListener('click', async () => {
+        const email = userSelect.value;
+        const pin = loginPin.value.trim();
+        if (pin.length < 6) { alert("PİN kod ən azı 6 rəqəmdən ibarət olmalıdır!"); return; }
+        
+        try {
+            btnLogin.disabled = true;
+            btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yoxlanılır...';
+            await signInWithEmailAndPassword(auth, email, pin);
+            loginPin.value = '';
+            btnLogin.disabled = false;
+            btnLogin.textContent = "Sistemə Daxil Ol";
+        } catch (e) {
+            console.error(e);
+            alert("PİN kod yanlışdır!");
+            btnLogin.disabled = false;
+            btnLogin.textContent = "Sistemə Daxil Ol";
+        }
+    });
+
+    btnLogout.addEventListener('click', async () => {
+        await signOut(auth);
+    });
+
+    // --- AVTOMATİK GPS ---
+    const btnGPS = document.getElementById('btnGPS');
+    const locationInput = document.getElementById('locationInput');
+
+    btnGPS.addEventListener('click', () => {
+        if (navigator.geolocation) {
+            btnGPS.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                    const data = await res.json();
+                    locationInput.value = data.display_name.split(',').slice(0, 3).join(',') || "Məkan tapıldı";
+                } catch {
+                    locationInput.value = `📍 ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+                }
+                btnGPS.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+            }, () => {
+                alert("Telefonun məkan tapma (GPS) icazəsi bağlıdır!");
+                btnGPS.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
+            });
+        }
+    });
+
+    // --- CHECK-IN / CHECK-OUT ---
+    let timerInterval;
+    const checkInBtn = document.getElementById('btnCheckIn');
+    const checkOutBtn = document.getElementById('btnCheckOut');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const currentLocationDisplay = document.getElementById('currentLocationDisplay');
+
+    const activeSession = JSON.parse(localStorage.getItem('natamamSession'));
+    if (activeSession) showCheckOut(activeSession.location, activeSession.startTime);
+
+    checkInBtn.addEventListener('click', async () => {
+        const loc = locationInput.value.trim();
+        if (!loc) { alert("Zəhmət olmasa məkanı qeyd edin."); return; }
+
+        const startTime = Date.now();
+        const fullStartDate = new Date().toLocaleString('az-AZ');
+
+        try {
+            checkInBtn.disabled = true;
+            checkInBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gözləyin...';
+            
+            const docRef = await addDoc(collection(db, "visits"), {
+                location: loc,
+                checkIn_Time: fullStartDate,
+                checkIn_Timestamp: startTime,
+                status: "active",
+                recorded_by: currentUserDisplayName 
+            });
+
+            localStorage.setItem('natamamSession', JSON.stringify({
+                docId: docRef.id,
+                location: loc,
+                startTime: startTime
+            }));
+
+            showCheckOut(loc, startTime);
+        } catch (e) {
+            console.error(e);
+            alert("Məlumatı yazmaq mümkün olmadı.");
+            checkInBtn.disabled = false;
+            checkInBtn.textContent = "Check-In";
+        }
+    });
+
+    checkOutBtn.addEventListener('click', async () => {
+        const session = JSON.parse(localStorage.getItem('natamamSession'));
+        if (!session) return;
+
+        const endTime = Date.now();
+        const fullEndDate = new Date().toLocaleString('az-AZ');
+        const durationMs = endTime - session.startTime;
+        
+        const h = Math.floor(durationMs / 3600000);
+        const m = Math.floor((durationMs % 3600000) / 60000);
+        const s = Math.floor((durationMs % 60000) / 1000);
+        const exactDuration = `${h} saat, ${m} dəqiqə, ${s} saniyə`;
+
+        try {
+            checkOutBtn.disabled = true;
+            checkOutBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yekunlaşdırılır...';
+
+            const docRef = doc(db, "visits", session.docId);
+            await updateDoc(docRef, {
+                checkOut_Time: fullEndDate,
+                checkOut_Timestamp: endTime,
+                duration_spent: exactDuration,
+                status: "completed"
+            });
+
+            localStorage.removeItem('natamamSession');
+            clearInterval(timerInterval);
+            
+            alert(`Çəkiliş bitdi!\nMəkanda keçirilən vaxt: ${exactDuration}`);
+            
+            // YENİ: Səhifəni yeniləmək əvəzinə formanı sıfırlayırıq (Reload ləğv edildi)
+            document.getElementById('checkInSection').classList.remove('hidden');
+            document.getElementById('checkOutSection').classList.add('hidden');
+            locationInput.value = '';
+            timerDisplay.textContent = '00:00:00';
+            checkOutBtn.disabled = false;
+            checkOutBtn.textContent = "Check-Out";
+            checkInBtn.disabled = false;
+            checkInBtn.textContent = "Check-In";
+
+        } catch (e) {
+            console.error(e);
+            checkOutBtn.disabled = false;
+            checkOutBtn.textContent = "Check-Out";
+        }
+    });
+
+    function showCheckOut(loc, startTime) {
+        document.getElementById('checkInSection').classList.add('hidden');
+        document.getElementById('checkOutSection').classList.remove('hidden');
+        currentLocationDisplay.textContent = loc;
+        
+        timerInterval = setInterval(() => {
+            const now = Date.now();
+            const diff = now - startTime;
+            
+            const hours = String(Math.floor(diff / 3600000)).padStart(2, '0');
+            const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+            const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            
+            timerDisplay.textContent = `${hours}:${mins}:${secs}`;
+        }, 1000);
+    }
+
+    // --- DASHBOARD VƏ ARXİV ---
+    const btnOpenArchive = document.getElementById('btnOpenArchive');
+    const btnCloseArchive = document.getElementById('btnCloseArchive');
+    const archiveModal = document.getElementById('archiveModal');
+    const historyList = document.getElementById('historyList');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const btnDownloadPDF = document.getElementById('btnDownloadPDF');
+
+    let currentTab = 'visits';
+    let currentArchiveData = [];
+
+    btnOpenArchive.addEventListener('click', () => {
+        archiveModal.classList.remove('hidden');
+        loadArchiveData(currentTab);
+    });
+
+    btnCloseArchive.addEventListener('click', () => { archiveModal.classList.add('hidden'); });
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            currentTab = e.target.getAttribute('data-type');
+            loadArchiveData(currentTab);
+        });
+    });
+
+    async function loadArchiveData(type) {
+        historyList.innerHTML = '<div style="text-align: center; color: #aaa; padding: 20px 0;"><i class="fa-solid fa-spinner fa-spin"></i> Məlumatlar yüklənir...</div>';
+        currentArchiveData = [];
+        
+        let totalMs = 0;
+        let totalAzN = 0;
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+
+        try {
+            let q = query(collection(db, type), orderBy(type === 'visits' ? "checkIn_Timestamp" : "timestamp", "desc"), limit(100));
+            const querySnapshot = await getDocs(q);
+            historyList.innerHTML = '';
+            
+            if (querySnapshot.empty) {
+                historyList.innerHTML = `<li style="text-align:center; color:#aaa; padding: 20px 0;"><i class="fa-solid fa-inbox"></i> Heç bir məlumat tapılmadı.</li>`;
+                document.getElementById('sumTime').textContent = "0s 0d";
+                document.getElementById('sumMoney').textContent = "0 AZN";
+                return;
+            }
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                currentArchiveData.push(data);
+                
+                const docDate = new Date(data.checkIn_Timestamp || data.timestamp);
+                if (docDate.getMonth() === currentMonth && docDate.getFullYear() === currentYear) {
+                    if (type === 'visits' && data.status === 'completed') {
+                        totalMs += (data.checkOut_Timestamp - data.checkIn_Timestamp);
+                    } else if (type === 'payments') {
+                        totalAzN += parseFloat(data.amount) || 0;
+                    }
+                }
+
+                const li = document.createElement('li');
+                const userTagHtml = data.recorded_by ? `<div class="user-tag"><i class="fa-solid fa-user-pen"></i> ${data.recorded_by}</div>` : '';
+
+                if (type === 'visits') {
+                    li.className = `history-item ${data.status === 'completed' ? 'completed' : 'active'}`;
+                    const outTime = data.checkOut_Time || 'Davam edir...';
+                    const dur = data.duration_spent || 'Hesablanır...';
+
+                    li.innerHTML = `
+                        ${userTagHtml}
+                        <strong><i class="fa-solid fa-location-dot"></i> ${data.location}</strong>
+                        <span><i class="fa-solid fa-arrow-right-to-bracket"></i> Giriş: ${data.checkIn_Time}</span>
+                        <span><i class="fa-solid fa-flag-checkered"></i> Çıxış: ${outTime}</span>
+                        <span><i class="fa-solid fa-stopwatch"></i> Müddət: ${dur}</span>
+                    `;
+                } else {
+                    li.className = 'history-item payment';
+                    const payTypeStr = data.payment_type === 'monthly' ? `Aylıq (${data.paid_for_month})` : `Gündəlik`;
+                    
+                    li.innerHTML = `
+                        ${userTagHtml}
+                        <strong><i class="fa-solid fa-money-bill-wave"></i> ${data.amount} AZN</strong>
+                        <span><i class="fa-regular fa-calendar-days"></i> Tarix: ${data.created_at}</span>
+                        <span><i class="fa-solid fa-user"></i> Ödəyən: ${data.payer || '-'}</span>
+                        <span><i class="fa-solid fa-user-check"></i> Qəbul edən: ${data.receiver || '-'}</span>
+                        <span><i class="fa-solid fa-tag"></i> Növ: ${payTypeStr}</span>
+                    `;
+                }
+                historyList.appendChild(li);
+            });
+            
+            if (type === 'visits') {
+                const h = Math.floor(totalMs / 3600000);
+                const m = Math.floor((totalMs % 3600000) / 60000);
+                document.getElementById('sumTime').textContent = `${h}s ${m}d`;
+            } else {
+                document.getElementById('sumMoney').textContent = `${totalAzN} AZN`;
+            }
+
+        } catch (error) {
+            console.error("Arxiv xətası: ", error);
+            historyList.innerHTML = '<div style="text-align:center; color: #f44336; padding: 20px 0;"><i class="fa-solid fa-circle-exclamation"></i> Məlumatları yükləmək mümkün olmadı.</div>';
+        }
+    }
+
+    // --- PDF ÇIXARIŞ ---
+    btnDownloadPDF.addEventListener('click', () => {
+        if(currentArchiveData.length === 0) return alert("Hesabat üçün məlumat tapılmadı.");
+
+        const originalBtnHtml = btnDownloadPDF.innerHTML;
+        btnDownloadPDF.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PDF Hazırlanır...';
+        btnDownloadPDF.disabled = true;
+
+        let tableHTML = `<tr style="background-color: #f2f2f2; color: #333;">`;
+        if(currentTab === 'visits') {
+            tableHTML += `<th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Məkan</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Giriş</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Çıxış</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Müddət</th></tr>`;
+            currentArchiveData.forEach(item => {
+                tableHTML += `<tr><td style="padding: 10px; border: 1px solid #ddd;">${item.location}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkIn_Time}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.checkOut_Time || 'Davam edir'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.duration_spent || '-'}</td></tr>`;
+            });
+        } else {
+            tableHTML += `<th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Məbləğ</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Tarix</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Ödəyən</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Qəbul Edən</th><th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Növ</th></tr>`;
+            currentArchiveData.forEach(item => {
+                const pType = item.payment_type === 'monthly' ? `Aylıq (${item.paid_for_month})` : `Gündəlik`;
+                tableHTML += `<tr><td style="padding: 10px; border: 1px solid #ddd;">${item.amount} AZN</td><td style="padding: 10px; border: 1px solid #ddd;">${item.created_at}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.payer || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${item.receiver || '-'}</td><td style="padding: 10px; border: 1px solid #ddd;">${pType}</td></tr>`;
+            });
+        }
+
+        const reportTitle = currentTab === 'visits' ? 'Çəkiliş Məkanları Hesabatı' : 'Ödənişlər Hesabatı';
+        
+        const reportElement = document.createElement('div');
+        reportElement.innerHTML = `
+            <div style="padding: 40px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #000; background: #fff; line-height: 1.5;">
+                <div style="text-align: center; border-bottom: 2px solid #FFCC00; padding-bottom: 20px; margin-bottom: 20px;">
+                    <h1 style="color: #1e1e1e; margin: 0; font-size: 26px;">Natamam Podcast</h1>
+                    <h3 style="color: #555; margin: 5px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
+                    <p style="color: #888; margin: 5px 0 0 0; font-size: 14px;">Mövzu: ${reportTitle}</p>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">${tableHTML}</table>
+                <div style="margin-top: 30px; text-align: right; font-size: 12px; color: #888;">Hesabatın çıxarılma tarixi: ${new Date().toLocaleString('az-AZ')}</div>
+            </div>`;
+
+        const opt = {
+            margin: 10,
+            filename: `Natamam_Hesabat_${currentTab}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().from(reportElement).set(opt).save().then(() => {
+            btnDownloadPDF.innerHTML = originalBtnHtml;
+            btnDownloadPDF.disabled = false;
+        });
+    });
+
+    // --- ÖDƏNİŞ MƏNTİQİ ---
+    const paymentRadios = document.getElementsByName('paymentType');
+    const monthSelector = document.getElementById('monthSelector');
+    const paymentMonth = document.getElementById('paymentMonth');
+    const receiverName = document.getElementById('receiverName');
+    const paymentAmount = document.getElementById('paymentAmount');
+    const btnSavePayment = document.getElementById('btnSavePayment');
+
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            e.target.value === 'monthly' ? monthSelector.classList.remove('hidden') : monthSelector.classList.add('hidden');
+        });
+    });
+
+    btnSavePayment.addEventListener('click', async () => {
+        const type = document.querySelector('input[name="paymentType"]:checked').value;
+        const amount = paymentAmount.value.trim();
+        const payer = payerName.value.trim();
+        const receiver = receiverName.value.trim();
+
+        if (!payer || !receiver || !amount) { alert("Bütün xanaları doldurun!"); return; }
+
+        let paymentData = {
+            amount: amount, payer: payer, receiver: receiver,
+            payment_type: type, created_at: new Date().toLocaleString('az-AZ'), timestamp: Date.now(),
+            recorded_by: currentUserDisplayName
+        };
+
+        if (type === 'monthly') {
+            if (!paymentMonth.value) { alert("Zəhmət olmasa ayı seçin."); return; }
+            paymentData.paid_for_month = paymentMonth.value;
+        }
+
+        try {
+            btnSavePayment.disabled = true;
+            btnSavePayment.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saxlanılır...';
+            await addDoc(collection(db, "payments"), paymentData);
+            alert("Ödəniş uğurla qeydə alındı!");
+            paymentAmount.value = ''; paymentMonth.value = ''; receiverName.value = '';
+            btnSavePayment.disabled = false; btnSavePayment.textContent = "Ödənişi Yadda Saxla";
+        } catch (e) {
+            console.error(e); alert("Ödənişi yadda saxlamaq mümkün olmadı.");
+            btnSavePayment.disabled = false; btnSavePayment.textContent = "Ödənişi Yadda Saxla";
+        }
+    });
+</script>
+
+</body>
+</html>
