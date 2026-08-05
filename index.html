@@ -854,13 +854,13 @@
         const reportElement = document.createElement('div');
         // Əsas sirr buradakı 'width: 1050px' dəyərindədir. PDF ekranı telefona görə daraltmır, standart ölçüdə çəkir.
         reportElement.innerHTML = `
-            <div style="width: 1050px; padding: 30px; font-family: 'Segoe UI', Arial, sans-serif; color: #000; background: #fff; box-sizing: border-box;">
+            <div style="width: 800px; padding: 20px; font-family: 'Segoe UI', Arial, sans-serif; color: #000; background: #fff; box-sizing: border-box;">
                 <div style="text-align: center; border-bottom: 3px solid #FFCC00; padding-bottom: 15px; margin-bottom: 25px;">
                     <h1 style="color: #111; margin: 0; font-size: 28px; text-transform: uppercase;">Natamam Podcast</h1>
                     <h3 style="color: #555; margin: 8px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
                     <p style="color: #888; margin: 5px 0 0 0; font-size: 14px;">Mövzu: ${reportTitle}</p>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; word-wrap: break-word;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; word-wrap: break-word;">
                     <thead>
                         ${tableHTMLHead}
                     </thead>
@@ -874,14 +874,15 @@
             </div>`;
 
         const opt = {
-            margin: [15, 10, 15, 10], // Yuxarı, sol, aşağı, sağ kənar boşluqları
-            filename: `Natamam_Hesabat_${currentTab}.pdf`,
-            image: { type: 'jpeg', quality: 1 },
-            // html2canvas-a kənar xətlərin kəsilməməsi üçün məcburi 1050px pəncərə genişliyi veririk
-            html2canvas: { scale: 2, useCORS: true, windowWidth: 1050 }, 
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, // Geniş (Üfüqi) format
-            pagebreak: { avoid: 'tr' } // Ən vacib kod: Sətirlərin ortadan kəsilməsinin qarşısını alır
-        };
+    margin: [15, 10, 15, 10], 
+    filename: `Natamam_Hesabat_${currentTab}.pdf`,
+    image: { type: 'jpeg', quality: 1 },
+    // Genişlik 800-ə salındı
+    html2canvas: { scale: 2, useCORS: true, windowWidth: 800 }, 
+    // orientation portrait olaraq dəyişdirildi
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, 
+    pagebreak: { avoid: 'tr' } 
+};
 
         html2pdf().from(reportElement).set(opt).save().then(() => {
             btnDownloadPDF.innerHTML = originalBtnHtml;
