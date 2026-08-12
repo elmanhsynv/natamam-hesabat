@@ -37,26 +37,11 @@
             width: 100%;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header img { max-width: 130px; }
 
-        .header img {
-            max-width: 130px;
-        }
-
-        #loadingScreen {
-            text-align: center;
-            color: var(--yellow);
-            padding: 50px 0;
-        }
-
-        #loadingScreen p {
-            color: #aaa;
-            font-size: 0.9rem;
-            margin-top: 15px;
-        }
+        #loadingScreen { text-align: center; color: var(--yellow); padding: 50px 0; }
+        #loadingScreen p { color: #aaa; font-size: 0.9rem; margin-top: 15px; }
 
         .card {
             background-color: var(--card-bg);
@@ -78,318 +63,131 @@
             gap: 10px; 
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #aaa;
-            font-size: 0.9rem;
-        }
+        label { display: block; margin-bottom: 5px; color: #aaa; font-size: 0.9rem; }
 
         input[type="text"], input[type="number"], input[type="month"], input[type="password"], select {
-            width: 100%;
-            height: 48px; 
-            padding: 0 12px; 
-            background-color: #1a1a1a;
-            border: 1px solid #444;
-            color: var(--yellow);
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-            font-size: 1rem;
+            width: 100%; height: 48px; padding: 0 12px; 
+            background-color: #1a1a1a; border: 1px solid #444;
+            color: var(--yellow); border-radius: 5px;
+            box-sizing: border-box; margin-bottom: 15px; font-size: 1rem;
         }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--yellow);
-        }
+        input:focus, select:focus { outline: none; border-color: var(--yellow); }
 
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .input-group input {
-            margin-bottom: 0;
-            flex: 1;
-        }
+        .input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .input-group input { margin-bottom: 0; flex: 1; }
 
         .btn-icon {
             background-color: rgba(255, 204, 0, 0.15);
-            border: 2px solid var(--yellow);
-            color: var(--yellow);
-            width: 55px;
-            height: 48px; 
-            padding: 0;
-            border-radius: 5px; 
-            box-sizing: border-box;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.1);
+            border: 2px solid var(--yellow); color: var(--yellow);
+            width: 55px; height: 48px; padding: 0;
+            border-radius: 5px; box-sizing: border-box;
+            cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; box-shadow: 0 0 10px rgba(255, 204, 0, 0.1);
         }
 
         .btn-icon:hover {
-            background-color: var(--yellow);
-            color: var(--bg-color);
+            background-color: var(--yellow); color: var(--bg-color);
             box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
             transform: translateY(-2px); 
         }
-
-        .btn-icon:active {
-            transform: translateY(2px);
-        }
+        .btn-icon:active { transform: translateY(2px); }
 
         button {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--yellow);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-bottom: 10px;
+            width: 100%; padding: 12px; background-color: var(--yellow);
+            color: var(--bg-color); border: none; border-radius: 5px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            transition: background 0.3s; margin-bottom: 10px;
         }
-
-        button:active {
-            opacity: 0.8;
-        }
-
-        button:disabled {
-            background-color: #555;
-            color: #888;
-            cursor: not-allowed;
-        }
+        button:active { opacity: 0.8; }
+        button:disabled { background-color: #555; color: #888; cursor: not-allowed; }
 
         .btn-outline {
-            background-color: transparent;
-            color: #aaa;
-            border: 1px solid #555;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            background-color: transparent; color: #aaa; border: 1px solid #555;
+            margin-top: 10px; font-size: 0.9rem; display: flex;
+            align-items: center; justify-content: center; gap: 8px;
         }
+        .btn-outline:hover { background-color: #333; }
 
-        .btn-outline:hover {
-            background-color: #333;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--text-color);
-            font-size: 1rem;
-        }
+        .radio-group { display: flex; gap: 15px; margin-bottom: 15px; }
+        .radio-group label { display: flex; align-items: center; gap: 5px; color: var(--text-color); font-size: 1rem; }
 
         #timerDisplay {
-            text-align: center;
-            font-size: 1.8rem;
-            color: var(--yellow);
-            margin: 15px 0;
-            font-weight: bold;
-            letter-spacing: 2px;
+            text-align: center; font-size: 1.8rem; color: var(--yellow);
+            margin: 15px 0; font-weight: bold; letter-spacing: 2px; transition: color 0.3s;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 20px;
-            z-index: 1000;
-            overflow-y: auto;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center;
+            align-items: flex-start; padding-top: 20px; z-index: 1000; overflow-y: auto;
         }
 
         .modal-content {
-            background: var(--card-bg);
-            width: 95%;
-            max-width: 500px;
-            padding: 20px;
-            border-radius: 10px;
-            border-top: 5px solid var(--yellow);
-            position: relative;
-            margin-bottom: 50px;
+            background: var(--card-bg); width: 95%; max-width: 500px;
+            padding: 20px; border-radius: 10px; border-top: 5px solid var(--yellow);
+            position: relative; margin-bottom: 50px;
         }
 
         .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.8rem;
-            color: #aaa;
-            cursor: pointer;
-            line-height: 1;
+            position: absolute; top: 15px; right: 20px; font-size: 1.8rem;
+            color: #aaa; cursor: pointer; line-height: 1;
         }
-
         .close-btn:hover { color: var(--yellow); }
 
-        .dashboard-summary {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
+        .dashboard-summary { display: flex; gap: 10px; margin: 15px 0; }
         .summary-box {
-            flex: 1;
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #444;
+            flex: 1; background: #1a1a1a; padding: 15px; border-radius: 8px;
+            text-align: center; border: 1px solid #444;
         }
+        .summary-box h4 { margin: 0 0 5px 0; color: #aaa; font-size: 0.8rem; }
+        .summary-box span { color: var(--yellow); font-size: 1.2rem; font-weight: bold; }
 
-        .summary-box h4 {
-            margin: 0 0 5px 0;
-            color: #aaa;
-            font-size: 0.8rem;
-        }
-
-        .summary-box span {
-            color: var(--yellow);
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
+        .tabs { display: flex; gap: 10px; margin-bottom: 15px; }
         .tab-btn {
-            flex: 1;
-            background: transparent;
-            border: 1px solid #555;
-            color: #aaa;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 0;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            flex: 1; background: transparent; border: 1px solid #555; color: #aaa;
+            padding: 10px; border-radius: 5px; margin: 0; font-size: 0.95rem;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
+        .tab-btn.active { background: var(--yellow); color: var(--bg-color); border-color: var(--yellow); font-weight: bold; }
 
-        .tab-btn.active {
-            background: var(--yellow);
-            color: var(--bg-color);
-            border-color: var(--yellow);
-            font-weight: bold;
-        }
-
-        .history-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            max-height: 45vh;
-            overflow-y: auto;
-        }
-
+        .history-list { list-style-type: none; padding: 0; margin: 0; max-height: 40vh; overflow-y: auto; }
         .history-item {
-            background-color: #1a1a1a;
-            border-left: 3px solid #555;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            position: relative;
+            background-color: #1a1a1a; border-left: 3px solid #555; padding: 12px;
+            padding-bottom: 45px; 
+            margin-bottom: 10px; border-radius: 5px; font-size: 0.9rem; position: relative;
         }
 
         .history-item.completed { border-left-color: #4CAF50; }
         .history-item.active { border-left-color: var(--yellow); }
         .history-item.payment { border-left-color: #2196F3; }
 
-        .history-item strong {
-            color: var(--yellow);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
-            font-size: 1.05rem;
-        }
-
-        .history-item span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #ccc;
-            margin-bottom: 4px;
-        }
+        .history-item strong { color: var(--yellow); display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 1.05rem; }
+        .history-item span { display: flex; align-items: center; gap: 6px; color: #ccc; margin-bottom: 4px; }
         
-        .user-tag {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #333;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            color: #aaa;
+        .user-tag { position: absolute; top: 12px; right: 12px; background: #333; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; color: #aaa; }
+        
+        /* Edit & Delete & Share Buttons in History */
+        .action-btns { position: absolute; bottom: 10px; right: 12px; display: flex; gap: 8px; }
+        .action-btns button { 
+            width: auto; padding: 6px 12px; margin: 0; font-size: 0.85rem; border-radius: 4px; background: #222;
         }
+        /* YENİ: Fərdi WhatsApp düyməsi stili */
+        .btn-share { color: #25D366; border: 1px solid #25D366; }
+        .btn-edit { color: var(--yellow); border: 1px solid var(--yellow); }
+        .btn-delete { color: #f44336; border: 1px solid #f44336; }
 
-        /* YENİ: Hesabat Paneli Üçün Xüsusi Genişlik */
-        #reportModal .modal-content {
-            max-width: 900px;
-            width: 95%;
-        }
-
+        #reportModal .modal-content { max-width: 900px; width: 95%; }
         #reportContainer {
-            background: #fff;
-            color: #000;
-            padding: 20px;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin-top: 15px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            background: #fff; color: #000; padding: 20px; border-radius: 5px;
+            overflow-x: auto; margin-top: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
         }
-
-        /* Cədvəl Dizaynı */
-        .report-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            min-width: 600px;
-        }
-
-        .report-table th {
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 12px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-
-        .report-table td {
-            padding: 12px;
-            border: 1px solid #ccc;
-            color: #222;
-        }
+        .report-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
+        .report-table th { background-color: #f4f4f4; color: #333; padding: 12px; border: 1px solid #ccc; text-align: left; }
+        .report-table td { padding: 12px; border: 1px solid #ccc; color: #222; }
     </style>
 </head>
 <body>
@@ -399,22 +197,19 @@
         <img src="natamam-logo.png" alt="Natamam Podcast Logo">
     </div>
 
-    <!-- Başlanğıc Yüklənmə Ekranı -->
     <div id="loadingScreen">
         <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 3rem;"></i>
         <p>Sistem yoxlanılır...</p>
     </div>
 
-    <!-- 1. GİRİŞ (LOGIN) EKRANI -->
+    <!-- 1. GİRİŞ EKRANI -->
     <div id="loginScreen" class="card hidden">
         <h2 style="justify-content: center; border: none;"><i class="fa-solid fa-shield-halved"></i> Sistemə Giriş</h2>
-        
         <label>İstifadəçi seçin</label>
         <select id="userSelect">
             <option value="admin@natamam.com">Elman</option>
             <option value="natavan@natamam.com">Natavan</option>
         </select>
-
         <label>PİN Kod</label>
         <input type="password" id="loginPin" placeholder="******" maxlength="10">
         <button id="btnLogin">Sistemə Daxil Ol</button>
@@ -427,7 +222,6 @@
             <i class="fa-solid fa-user"></i> Xoş gəldin, <strong id="loggedInUserName" style="color:var(--yellow)">...</strong>
         </div>
 
-        <!-- Məkan və Check-in Bölməsi -->
         <div class="card">
             <h2><i class="fa-solid fa-map-location-dot"></i> Çəkiliş Məkanı</h2>
             
@@ -447,33 +241,24 @@
             </div>
         </div>
 
-        <!-- Ödəniş Bölməsi -->
         <div class="card">
             <h2><i class="fa-solid fa-wallet"></i> Ödəniş Qeydi</h2>
-            
             <div class="radio-group">
                 <label><input type="radio" name="paymentType" value="monthly" checked> Aylıq</label>
                 <label><input type="radio" name="paymentType" value="daily"> Gündəlik</label>
             </div>
-
             <div id="monthSelector">
                 <label for="paymentMonth">Hansı ayın ödənişidir?</label>
                 <input type="month" id="paymentMonth">
             </div>
-
             <label for="payerName">Ödənişi edən şəxs</label>
             <input type="text" id="payerName" placeholder="Məs: Elman">
-            
             <label for="receiverName">Ödənişi qəbul edən şəxs</label>
             <input type="text" id="receiverName" placeholder="Məs: Məkan rəhbəri">
-
             <label for="paymentAmount">Məbləğ (AZN)</label>
             <input type="number" id="paymentAmount" placeholder="Məs: 160">
-
-            <!-- YENİ: Qeyd hissəsi (Zəruri deyil) -->
             <label for="paymentNote">Qeyd (İstəyə bağlı)</label>
             <input type="text" id="paymentNote" placeholder="Əlavə qeydlərinizi yaza bilərsiniz...">
-
             <button id="btnSavePayment">Ödənişi Yadda Saxla</button>
         </div>
 
@@ -493,13 +278,18 @@
         <span class="close-btn" id="btnCloseArchive">&times;</span>
         <h2 style="border-bottom: 1px solid #444; padding-bottom: 10px; margin-top:0;"><i class="fa-solid fa-chart-pie"></i> Statistika & Arxiv</h2>
         
+        <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #444; display: flex; align-items: center; justify-content: space-between;">
+            <label for="archiveMonthFilter" style="margin: 0; color: #ccc;">📅 Hesabat Ayı:</label>
+            <input type="month" id="archiveMonthFilter" style="width: auto; height: 36px; margin: 0; padding: 0 10px; font-size: 0.9rem;">
+        </div>
+
         <div class="dashboard-summary">
             <div class="summary-box">
-                <h4><i class="fa-regular fa-clock"></i> Bu Ay Çəkiliş</h4>
+                <h4><i class="fa-regular fa-clock"></i> Cəmi Çəkiliş</h4>
                 <span id="sumTime">0s 0d</span>
             </div>
             <div class="summary-box">
-                <h4><i class="fa-solid fa-coins"></i> Bu Ay Ödəniş</h4>
+                <h4><i class="fa-solid fa-coins"></i> Cəmi Ödəniş</h4>
                 <span id="sumMoney">0 AZN</span>
             </div>
         </div>
@@ -509,9 +299,8 @@
             <button class="tab-btn" data-type="payments"><i class="fa-solid fa-file-invoice-dollar"></i> Ödənişlər</button>
         </div>
 
-        <!-- YENİ: PDF əvəzinə Sayt İçi Hesabat Düyməsi -->
         <button id="btnViewReport" class="btn-outline" style="border-color: #4CAF50; color: #4CAF50; margin-bottom: 15px; width: 100%;">
-            <i class="fa-solid fa-file-lines"></i> Hesabata Bax
+            <i class="fa-solid fa-file-lines"></i> Seçilmiş Ayın Hesabatına Bax
         </button>
         
         <ul id="historyList" class="history-list">
@@ -520,22 +309,26 @@
     </div>
 </div>
 
-<!-- YENİ: Hesabatı Göstərən Pəncərə (Modal) -->
+<!-- HESABAT PƏNCƏRƏSİ -->
 <div id="reportModal" class="modal hidden">
     <div class="modal-content">
         <span class="close-btn" id="btnCloseReport">&times;</span>
         <h2 style="border-bottom: 1px solid #444; padding-bottom: 10px; margin-top:0;"><i class="fa-solid fa-file-lines"></i> Rəsmi Hesabat</h2>
         
         <div id="reportContainer">
-            <!-- Cədvəl bura avtomatik yüklənəcək -->
+            <!-- Cədvəl -->
         </div>
+
+        <button id="btnWhatsAppShare" class="btn-outline" style="background: #25D366; color: #fff; border: none; margin-top: 20px; width: 100%; padding: 12px; font-size: 1rem;">
+            <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hesabatı WhatsApp ilə Göndər
+        </button>
     </div>
 </div>
 
 <!-- Firebase Modular SDK -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { initializeFirestore, persistentLocalCache, persistentSingleTabManager, collection, addDoc, updateDoc, doc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import { initializeFirestore, persistentLocalCache, persistentSingleTabManager, collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
     const firebaseConfig = {
@@ -549,14 +342,11 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    
-    const db = initializeFirestore(app, {
-        localCache: persistentLocalCache({tabManager: persistentSingleTabManager()})
-    });
+    const db = initializeFirestore(app, { localCache: persistentLocalCache({tabManager: persistentSingleTabManager()}) });
 
     let currentUserDisplayName = "";
 
-    // GİRİŞ MƏNTİQİ
+    // GİRİŞ
     const loadingScreen = document.getElementById('loadingScreen');
     const loginScreen = document.getElementById('loginScreen');
     const mainAppScreen = document.getElementById('mainAppScreen');
@@ -570,17 +360,19 @@
     onAuthStateChanged(auth, (user) => {
         loadingScreen.classList.add('hidden');
         if (user) {
-            if (user.email.toLowerCase().includes("natavan")) {
-                currentUserDisplayName = "Natavan";
-            } else {
-                currentUserDisplayName = "Elman";
-            }
-
+            currentUserDisplayName = user.email.toLowerCase().includes("natavan") ? "Natavan" : "Elman";
             loggedInUserName.textContent = currentUserDisplayName;
             if(!payerName.value) payerName.value = currentUserDisplayName;
 
             loginScreen.classList.add('hidden');
             mainAppScreen.classList.remove('hidden');
+
+            const activeSess = JSON.parse(localStorage.getItem('natamamSession'));
+            if (activeSess) {
+                if (Date.now() - activeSess.startTime > 4 * 3600000) {
+                    alert("⚠️ DİQQƏT: Çəkiliş taymeri 4 saatdan çoxdur işləyir. Check-out etməyi unutmusunuz?");
+                }
+            }
         } else {
             mainAppScreen.classList.add('hidden');
             loginScreen.classList.remove('hidden');
@@ -591,52 +383,36 @@
         const email = userSelect.value;
         const pin = loginPin.value.trim();
         if (pin.length < 6) { alert("PİN kod ən azı 6 rəqəmdən ibarət olmalıdır!"); return; }
-        
         try {
-            btnLogin.disabled = true;
-            btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yoxlanılır...';
+            btnLogin.disabled = true; btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yoxlanılır...';
             await signInWithEmailAndPassword(auth, email, pin);
-            loginPin.value = '';
-            btnLogin.disabled = false;
-            btnLogin.textContent = "Sistemə Daxil Ol";
+            loginPin.value = ''; btnLogin.disabled = false; btnLogin.textContent = "Sistemə Daxil Ol";
         } catch (e) {
-            console.error(e);
-            alert("PİN kod yanlışdır!");
-            btnLogin.disabled = false;
-            btnLogin.textContent = "Sistemə Daxil Ol";
+            alert("PİN kod yanlışdır!"); btnLogin.disabled = false; btnLogin.textContent = "Sistemə Daxil Ol";
         }
     });
 
-    btnLogout.addEventListener('click', async () => {
-        await signOut(auth);
-    });
+    btnLogout.addEventListener('click', async () => { await signOut(auth); });
 
-    // AVTOMATİK GPS 
+    // GPS
     const btnGPS = document.getElementById('btnGPS');
     const locationInput = document.getElementById('locationInput');
-
     btnGPS.addEventListener('click', () => {
         if (navigator.geolocation) {
             btnGPS.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
             navigator.geolocation.getCurrentPosition(async (pos) => {
-                const lat = pos.coords.latitude;
-                const lon = pos.coords.longitude;
+                const lat = pos.coords.latitude, lon = pos.coords.longitude;
                 try {
                     const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
                     const data = await res.json();
                     locationInput.value = data.display_name.split(',').slice(0, 3).join(',') || "Məkan tapıldı";
-                } catch {
-                    locationInput.value = `📍 ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-                }
+                } catch { locationInput.value = `📍 ${lat.toFixed(4)}, ${lon.toFixed(4)}`; }
                 btnGPS.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
-            }, () => {
-                alert("Telefonun məkan tapma (GPS) icazəsi bağlıdır!");
-                btnGPS.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>';
-            });
+            }, () => { alert("GPS icazəsi bağlıdır!"); btnGPS.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i>'; });
         }
     });
 
-    // CHECK-IN / CHECK-OUT
+    // CHECK-IN/OUT
     let timerInterval;
     const checkInBtn = document.getElementById('btnCheckIn');
     const checkOutBtn = document.getElementById('btnCheckOut');
@@ -649,360 +425,331 @@
     checkInBtn.addEventListener('click', async () => {
         const loc = locationInput.value.trim();
         if (!loc) { alert("Zəhmət olmasa məkanı qeyd edin."); return; }
-
         const startTime = Date.now();
-        const fullStartDate = new Date().toLocaleString('az-AZ');
-
         try {
-            checkInBtn.disabled = true;
-            checkInBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gözləyin...';
-            
+            checkInBtn.disabled = true; checkInBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gözləyin...';
             const docRef = await addDoc(collection(db, "visits"), {
-                location: loc,
-                checkIn_Time: fullStartDate,
-                checkIn_Timestamp: startTime,
-                status: "active",
-                recorded_by: currentUserDisplayName 
+                location: loc, checkIn_Time: new Date().toLocaleString('az-AZ'),
+                checkIn_Timestamp: startTime, status: "active", recorded_by: currentUserDisplayName 
             });
-
-            localStorage.setItem('natamamSession', JSON.stringify({
-                docId: docRef.id,
-                location: loc,
-                startTime: startTime
-            }));
-
+            localStorage.setItem('natamamSession', JSON.stringify({ docId: docRef.id, location: loc, startTime: startTime }));
             showCheckOut(loc, startTime);
-        } catch (e) {
-            console.error(e);
-            alert("Məlumatı yazmaq mümkün olmadı.");
-            checkInBtn.disabled = false;
-            checkInBtn.textContent = "Check-In";
-        }
+        } catch (e) { alert("Xəta baş verdi."); checkInBtn.disabled = false; checkInBtn.textContent = "Check-In"; }
     });
 
     checkOutBtn.addEventListener('click', async () => {
         const session = JSON.parse(localStorage.getItem('natamamSession'));
         if (!session) return;
-
         const endTime = Date.now();
-        const fullEndDate = new Date().toLocaleString('az-AZ');
         const durationMs = endTime - session.startTime;
-        
-        const h = Math.floor(durationMs / 3600000);
-        const m = Math.floor((durationMs % 3600000) / 60000);
-        const s = Math.floor((durationMs % 60000) / 1000);
+        const h = Math.floor(durationMs / 3600000), m = Math.floor((durationMs % 3600000) / 60000), s = Math.floor((durationMs % 60000) / 1000);
         const exactDuration = `${h} saat, ${m} dəqiqə, ${s} saniyə`;
 
         try {
-            checkOutBtn.disabled = true;
-            checkOutBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yekunlaşdırılır...';
-
-            const docRef = doc(db, "visits", session.docId);
-            await updateDoc(docRef, {
-                checkOut_Time: fullEndDate,
-                checkOut_Timestamp: endTime,
-                duration_spent: exactDuration,
-                status: "completed"
+            checkOutBtn.disabled = true; checkOutBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yekunlaşdırılır...';
+            await updateDoc(doc(db, "visits", session.docId), {
+                checkOut_Time: new Date().toLocaleString('az-AZ'), checkOut_Timestamp: endTime,
+                duration_spent: exactDuration, status: "completed"
             });
-
-            localStorage.removeItem('natamamSession');
-            clearInterval(timerInterval);
-            
+            localStorage.removeItem('natamamSession'); clearInterval(timerInterval);
             alert(`Çəkiliş bitdi!\nMəkanda keçirilən vaxt: ${exactDuration}`);
-            
-            document.getElementById('checkInSection').classList.remove('hidden');
-            document.getElementById('checkOutSection').classList.add('hidden');
-            locationInput.value = '';
-            timerDisplay.textContent = '00:00:00';
-            checkOutBtn.disabled = false;
-            checkOutBtn.textContent = "Check-Out";
-            checkInBtn.disabled = false;
-            checkInBtn.textContent = "Check-In";
-
-        } catch (e) {
-            console.error(e);
-            checkOutBtn.disabled = false;
-            checkOutBtn.textContent = "Check-Out";
-        }
+            document.getElementById('checkInSection').classList.remove('hidden'); document.getElementById('checkOutSection').classList.add('hidden');
+            locationInput.value = ''; timerDisplay.textContent = '00:00:00'; timerDisplay.style.color = 'var(--yellow)';
+            checkOutBtn.disabled = false; checkOutBtn.textContent = "Check-Out";
+            checkInBtn.disabled = false; checkInBtn.textContent = "Check-In";
+        } catch (e) { checkOutBtn.disabled = false; checkOutBtn.textContent = "Check-Out"; }
     });
 
     function showCheckOut(loc, startTime) {
         document.getElementById('checkInSection').classList.add('hidden');
         document.getElementById('checkOutSection').classList.remove('hidden');
         currentLocationDisplay.textContent = loc;
-        
         timerInterval = setInterval(() => {
-            const now = Date.now();
-            const diff = now - startTime;
+            const diff = Date.now() - startTime;
+            const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+            const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            timerDisplay.textContent = `${h}:${m}:${s}`;
             
-            const hours = String(Math.floor(diff / 3600000)).padStart(2, '0');
-            const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-            const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-            
-            timerDisplay.textContent = `${hours}:${mins}:${secs}`;
+            if (diff > 4 * 3600000) timerDisplay.style.color = '#f44336';
         }, 1000);
     }
 
-    // DASHBOARD VƏ ARXİV
-    const btnOpenArchive = document.getElementById('btnOpenArchive');
-    const btnCloseArchive = document.getElementById('btnCloseArchive');
+    // DASHBOARD & FİLTRLƏMƏ
     const archiveModal = document.getElementById('archiveModal');
     const historyList = document.getElementById('historyList');
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    
-    // YENİ DƏYİŞƏNLƏR: Sayt İçi Hesabat Paneli
-    const btnViewReport = document.getElementById('btnViewReport');
-    const reportModal = document.getElementById('reportModal');
-    const btnCloseReport = document.getElementById('btnCloseReport');
-    const reportContainer = document.getElementById('reportContainer');
+    const monthFilterInput = document.getElementById('archiveMonthFilter');
+
+    const today = new Date();
+    monthFilterInput.value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
 
     let currentTab = 'visits';
     let currentArchiveData = [];
 
-    btnOpenArchive.addEventListener('click', () => {
-        archiveModal.classList.remove('hidden');
-        loadArchiveData(currentTab);
-    });
+    document.getElementById('btnOpenArchive').addEventListener('click', () => { archiveModal.classList.remove('hidden'); loadArchiveData(currentTab); });
+    document.getElementById('btnCloseArchive').addEventListener('click', () => { archiveModal.classList.add('hidden'); });
+    document.getElementById('btnCloseReport').addEventListener('click', () => { document.getElementById('reportModal').classList.add('hidden'); });
 
-    btnCloseArchive.addEventListener('click', () => { archiveModal.classList.add('hidden'); });
-    btnCloseReport.addEventListener('click', () => { reportModal.classList.add('hidden'); });
-
-    // Modaldan kənara basdıqda bağlamaq üçün
     window.addEventListener('click', (e) => {
         if (e.target === archiveModal) archiveModal.classList.add('hidden');
-        if (e.target === reportModal) reportModal.classList.add('hidden');
+        if (e.target === document.getElementById('reportModal')) document.getElementById('reportModal').classList.add('hidden');
     });
 
-    tabBtns.forEach(btn => {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            tabBtns.forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
             currentTab = e.target.getAttribute('data-type');
             loadArchiveData(currentTab);
         });
     });
 
+    monthFilterInput.addEventListener('change', () => loadArchiveData(currentTab));
+
     async function loadArchiveData(type) {
-        historyList.innerHTML = '<div style="text-align: center; color: #aaa; padding: 20px 0;"><i class="fa-solid fa-spinner fa-spin"></i> Məlumatlar yüklənir...</div>';
+        historyList.innerHTML = '<div style="text-align:center; color:#aaa; padding:20px 0;"><i class="fa-solid fa-spinner fa-spin"></i> Yüklənir...</div>';
         currentArchiveData = [];
         
-        let totalMs = 0;
-        let totalAzN = 0;
-        const currentMonth = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
+        let totalMs = 0, totalAzN = 0;
+        
+        const selectedDate = new Date(monthFilterInput.value);
+        const filterMonth = selectedDate.getMonth();
+        const filterYear = selectedDate.getFullYear();
 
         try {
-            let q = query(collection(db, type), orderBy(type === 'visits' ? "checkIn_Timestamp" : "timestamp", "desc"), limit(100));
+            let q = query(collection(db, type), orderBy(type === 'visits' ? "checkIn_Timestamp" : "timestamp", "desc"), limit(200));
             const querySnapshot = await getDocs(q);
             historyList.innerHTML = '';
-            
-            if (querySnapshot.empty) {
-                historyList.innerHTML = `<li style="text-align:center; color:#aaa; padding: 20px 0;"><i class="fa-solid fa-inbox"></i> Heç bir məlumat tapılmadı.</li>`;
-                document.getElementById('sumTime').textContent = "0s 0d";
-                document.getElementById('sumMoney').textContent = "0 AZN";
-                return;
-            }
 
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                currentArchiveData.push(data);
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                data.id = docSnap.id; 
                 
                 const docDate = new Date(data.checkIn_Timestamp || data.timestamp);
-                if (docDate.getMonth() === currentMonth && docDate.getFullYear() === currentYear) {
+                
+                if (docDate.getMonth() === filterMonth && docDate.getFullYear() === filterYear) {
+                    currentArchiveData.push(data);
+
                     if (type === 'visits' && data.status === 'completed') {
                         totalMs += (data.checkOut_Timestamp - data.checkIn_Timestamp);
                     } else if (type === 'payments') {
                         totalAzN += parseFloat(data.amount) || 0;
                     }
-                }
 
-                const li = document.createElement('li');
-                const userTagHtml = data.recorded_by ? `<div class="user-tag"><i class="fa-solid fa-user-pen"></i> ${data.recorded_by}</div>` : '';
-
-                if (type === 'visits') {
-                    li.className = `history-item ${data.status === 'completed' ? 'completed' : 'active'}`;
-                    const outTime = data.checkOut_Time || 'Davam edir...';
-                    const dur = data.duration_spent || 'Hesablanır...';
-
-                    li.innerHTML = `
-                        ${userTagHtml}
-                        <strong><i class="fa-solid fa-location-dot"></i> ${data.location}</strong>
-                        <span><i class="fa-solid fa-arrow-right-to-bracket"></i> Giriş: ${data.checkIn_Time}</span>
-                        <span><i class="fa-solid fa-flag-checkered"></i> Çıxış: ${outTime}</span>
-                        <span><i class="fa-solid fa-stopwatch"></i> Müddət: ${dur}</span>
-                    `;
-                } else {
-                    li.className = 'history-item payment';
-                    const payTypeStr = data.payment_type === 'monthly' ? `Aylıq (${data.paid_for_month})` : `Gündəlik`;
-                    const noteStr = data.note ? `<span><i class="fa-regular fa-comment-dots"></i> Qeyd: ${data.note}</span>` : '';
+                    const li = document.createElement('li');
+                    const userTagHtml = data.recorded_by ? `<div class="user-tag"><i class="fa-solid fa-user-pen"></i> ${data.recorded_by}</div>` : '';
                     
-                    li.innerHTML = `
-                        ${userTagHtml}
-                        <strong><i class="fa-solid fa-money-bill-wave"></i> ${data.amount} AZN</strong>
-                        <span><i class="fa-regular fa-calendar-days"></i> Tarix: ${data.created_at}</span>
-                        <span><i class="fa-solid fa-user"></i> Ödəyən: ${data.payer || '-'}</span>
-                        <span><i class="fa-solid fa-user-check"></i> Qəbul edən: ${data.receiver || '-'}</span>
-                        <span><i class="fa-solid fa-tag"></i> Növ: ${payTypeStr}</span>
-                        ${noteStr}
+                    // YENİ: WhatsApp Share düyməsi fərdi əməliyyatlar üçün əlavə edildi
+                    const actionBtnsHtml = `
+                        <div class="action-btns">
+                            <button class="btn-share" data-id="${data.id}" data-type="${type}" title="WhatsApp ilə paylaş"><i class="fa-brands fa-whatsapp"></i></button>
+                            <button class="btn-edit" data-id="${data.id}" data-type="${type}" title="Düzəliş et"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-delete" data-id="${data.id}" data-type="${type}" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     `;
+
+                    if (type === 'visits') {
+                        li.className = `history-item ${data.status === 'completed' ? 'completed' : 'active'}`;
+                        li.innerHTML = `
+                            ${userTagHtml}
+                            <strong><i class="fa-solid fa-location-dot"></i> <span class="loc-text" style="color:var(--yellow);">${data.location}</span></strong>
+                            <span><i class="fa-solid fa-arrow-right-to-bracket"></i> Giriş: ${data.checkIn_Time}</span>
+                            <span><i class="fa-solid fa-flag-checkered"></i> Çıxış: ${data.checkOut_Time || 'Davam edir...'}</span>
+                            <span><i class="fa-solid fa-stopwatch"></i> Müddət: ${data.duration_spent || '-'}</span>
+                            ${actionBtnsHtml}
+                        `;
+                    } else {
+                        li.className = 'history-item payment';
+                        const pType = data.payment_type === 'monthly' ? `Aylıq (${data.paid_for_month})` : `Gündəlik`;
+                        const noteStr = data.note ? `<span><i class="fa-regular fa-comment-dots"></i> Qeyd: <span class="note-text">${data.note}</span></span>` : '';
+                        li.innerHTML = `
+                            ${userTagHtml}
+                            <strong><i class="fa-solid fa-money-bill-wave"></i> <span class="amt-text" style="color:var(--yellow);">${data.amount}</span> AZN</strong>
+                            <span><i class="fa-regular fa-calendar-days"></i> Tarix: ${data.created_at}</span>
+                            <span><i class="fa-solid fa-user"></i> Ödəyən: ${data.payer || '-'}</span>
+                            <span><i class="fa-solid fa-user-check"></i> Qəbul edən: ${data.receiver || '-'}</span>
+                            <span><i class="fa-solid fa-tag"></i> Növ: ${pType}</span>
+                            ${noteStr}
+                            ${actionBtnsHtml}
+                        `;
+                    }
+                    historyList.appendChild(li);
                 }
-                historyList.appendChild(li);
             });
-            
-            if (type === 'visits') {
-                const h = Math.floor(totalMs / 3600000);
-                const m = Math.floor((totalMs % 3600000) / 60000);
-                document.getElementById('sumTime').textContent = `${h}s ${m}d`;
-            } else {
-                document.getElementById('sumMoney').textContent = `${totalAzN} AZN`;
+
+            if (currentArchiveData.length === 0) {
+                historyList.innerHTML = `<li style="text-align:center; color:#aaa; padding:20px 0;">Seçilmiş ay üçün məlumat yoxdur.</li>`;
             }
 
+            document.getElementById('sumTime').textContent = type === 'visits' ? `${Math.floor(totalMs/3600000)}s ${Math.floor((totalMs%3600000)/60000)}d` : "0s 0d";
+            document.getElementById('sumMoney').textContent = type === 'payments' ? `${totalAzN} AZN` : "0 AZN";
+
         } catch (error) {
-            console.error("Arxiv xətası: ", error);
-            historyList.innerHTML = '<div style="text-align:center; color: #f44336; padding: 20px 0;"><i class="fa-solid fa-circle-exclamation"></i> Məlumatları yükləmək mümkün olmadı.</div>';
+            historyList.innerHTML = '<div style="text-align:center; color:#f44336; padding:20px 0;"><i class="fa-solid fa-circle-exclamation"></i> Xəta. İnterneti yoxlayın.</div>';
         }
     }
 
-    // --- YENİ: SAYT İÇİ HESABATIN GÖSTƏRİLMƏSİ MƏNTİQİ ---
-    btnViewReport.addEventListener('click', () => {
-        if(currentArchiveData.length === 0) return alert("Hesabat üçün məlumat tapılmadı.");
+    // REDAKTƏ, SİLİNMƏ VƏ FƏRDİ PAYLAŞIM HADİSƏLƏRİ
+    historyList.addEventListener('click', async (e) => {
+        const deleteBtn = e.target.closest('.btn-delete');
+        const editBtn = e.target.closest('.btn-edit');
+        const shareBtn = e.target.closest('.btn-share'); // YENİ
 
-        let tableHTMLHead = '';
-        let tableHTMLBody = '';
+        if (deleteBtn) {
+            if (confirm("Bu əməliyyatı qalıcı olaraq silmək istədiyinizə əminsiniz?")) {
+                await deleteDoc(doc(db, deleteBtn.dataset.type, deleteBtn.dataset.id));
+                loadArchiveData(currentTab);
+            }
+        }
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            const type = editBtn.dataset.type;
+            const itemElement = editBtn.closest('.history-item');
+
+            if (type === 'visits') {
+                const currentLoc = itemElement.querySelector('.loc-text').textContent;
+                const newLoc = prompt("Məkan adını düzəliş edin:", currentLoc);
+                if (newLoc && newLoc !== currentLoc) {
+                    await updateDoc(doc(db, type, id), { location: newLoc });
+                    loadArchiveData(currentTab);
+                }
+            } else {
+                const currentAmt = itemElement.querySelector('.amt-text').textContent;
+                const newAmount = prompt("Məbləği düzəliş edin (AZN):", currentAmt);
+                if (newAmount && newAmount !== currentAmt) {
+                    await updateDoc(doc(db, type, id), { amount: newAmount });
+                    loadArchiveData(currentTab);
+                }
+            }
+        }
+
+        // YENİ: Fərdi WhatsApp Paylaşımı Məntiqi
+        if (shareBtn) {
+            const id = shareBtn.dataset.id;
+            const type = shareBtn.dataset.type;
+            
+            // Seçilmiş elementi mövcud datadan tapırıq
+            const item = currentArchiveData.find(d => d.id === id);
+            if (!item) return;
+
+            let textMsg = "";
+
+            if (type === 'visits') {
+                textMsg = `*Natamam Podcast - Çəkiliş Qeydi*\n\n` +
+                          `Məkan: ${item.location}\n` +
+                          `Müddət: ${item.duration_spent || 'Davam edir...'}\n` +
+                          `Giriş: ${item.checkIn_Time}\n` +
+                          `Çıxış: ${item.checkOut_Time || 'Davam edir...'}\n` +
+                          `İcra edən: ${item.recorded_by || '-'}`;
+            } else {
+                const pType = item.payment_type === 'monthly' ? `Aylıq (${item.paid_for_month})` : `Gündəlik`;
+                textMsg = `*Natamam Podcast - Ödəniş Qəbzi*\n\n` +
+                          `Məbləğ: ${item.amount} AZN\n` +
+                          `Növ: ${pType}\n` +
+                          `Ödəyən: ${item.payer || '-'}\n` +
+                          `Qəbul edən: ${item.receiver || '-'}\n` +
+                          `Tarix: ${item.created_at}\n` +
+                          `İcra edən: ${item.recorded_by || '-'}`;
+                if (item.note) textMsg += `\nQeyd: ${item.note}`;
+            }
+
+            // WhatsApp-ı birbaşa mətnlə açır
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textMsg)}`, '_blank');
+        }
+    });
+
+    // HESABATIN GÖSTƏRİLMƏSİ
+    document.getElementById('btnViewReport').addEventListener('click', () => {
+        if(currentArchiveData.length === 0) return alert("Hesabat üçün bu ayda məlumat yoxdur.");
+        let tHead = '', tBody = '';
 
         if(currentTab === 'visits') {
-            tableHTMLHead = `
-                <tr>
-                    <th>Məkan</th>
-                    <th>Giriş</th>
-                    <th>Çıxış</th>
-                    <th>Müddət</th>
-                </tr>
-            `;
+            tHead = `<tr><th>Məkan</th><th>Giriş</th><th>Çıxış</th><th>Müddət</th></tr>`;
             currentArchiveData.forEach(item => {
-                tableHTMLBody += `
-                    <tr>
-                        <td style="font-weight: bold;">${item.location}</td>
-                        <td>${item.checkIn_Time}</td>
-                        <td>${item.checkOut_Time || 'Davam edir...'}</td>
-                        <td>${item.duration_spent || '-'}</td>
-                    </tr>
-                `;
+                tBody += `<tr><td style="font-weight:bold;">${item.location}</td><td>${item.checkIn_Time}</td><td>${item.checkOut_Time || 'Davam edir...'}</td><td>${item.duration_spent || '-'}</td></tr>`;
             });
         } else {
-            // Ödənişlərə Qeyd sütunu da əlavə edildi
-            tableHTMLHead = `
-                <tr>
-                    <th>Məbləğ</th>
-                    <th>Tarix</th>
-                    <th>Ödəyən</th>
-                    <th>Qəbul Edən</th>
-                    <th>Növ</th>
-                    <th>Qeyd</th>
-                </tr>
-            `;
+            tHead = `<tr><th>Məbləğ</th><th>Tarix</th><th>Ödəyən</th><th>Qəbul Edən</th><th>Növ</th><th>Qeyd</th></tr>`;
             currentArchiveData.forEach(item => {
                 const pType = item.payment_type === 'monthly' ? `Aylıq (${item.paid_for_month})` : `Gündəlik`;
-                tableHTMLBody += `
-                    <tr>
-                        <td style="font-weight: bold;">${item.amount} AZN</td>
-                        <td>${item.created_at}</td>
-                        <td>${item.payer || '-'}</td>
-                        <td>${item.receiver || '-'}</td>
-                        <td>${pType}</td>
-                        <td>${item.note || '-'}</td>
-                    </tr>
-                `;
+                tBody += `<tr><td style="font-weight:bold;">${item.amount} AZN</td><td>${item.created_at}</td><td>${item.payer || '-'}</td><td>${item.receiver || '-'}</td><td>${pType}</td><td>${item.note || '-'}</td></tr>`;
             });
         }
 
-        const reportTitle = currentTab === 'visits' ? 'Çəkiliş Məkanları Hesabatı' : 'Ödənişlər Hesabatı';
-        
-        reportContainer.innerHTML = `
-            <div style="text-align: center; border-bottom: 3px solid #FFCC00; padding-bottom: 15px; margin-bottom: 25px;">
-                <h1 style="color: #111; margin: 0; font-size: 24px; text-transform: uppercase;">Natamam Podcast</h1>
-                <h3 style="color: #555; margin: 8px 0 0 0; font-size: 16px;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
-                <p style="color: #888; margin: 5px 0 0 0; font-size: 14px;">Mövzu: ${reportTitle}</p>
+        const mName = monthFilterInput.value;
+        document.getElementById('reportContainer').innerHTML = `
+            <div style="text-align:center; border-bottom:3px solid #FFCC00; padding-bottom:15px; margin-bottom:25px;">
+                <h1 style="color:#111; margin:0; font-size:24px;">Natamam Podcast</h1>
+                <h3 style="color:#555; margin:8px 0 0 0;">Rəsmi Dövriyyə və İzləmə Sənədi</h3>
+                <p style="color:#888; margin:5px 0 0 0;">Dövr: ${mName} | Mövzu: ${currentTab === 'visits' ? 'Çəkilişlər' : 'Ödənişlər'}</p>
             </div>
-            
-            <table class="report-table">
-                <thead>${tableHTMLHead}</thead>
-                <tbody>${tableHTMLBody}</tbody>
-            </table>
-            
-            <div style="margin-top: 30px; text-align: right; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 10px;">
-                Sənədin formalaşdırılma tarixi: ${new Date().toLocaleString('az-AZ')}
-            </div>
+            <table class="report-table"><thead>${tHead}</thead><tbody>${tBody}</tbody></table>
         `;
-
-        // Hesabat pəncərəsini ekranda göstər
-        reportModal.classList.remove('hidden');
+        document.getElementById('reportModal').classList.remove('hidden');
     });
 
-    // ÖDƏNİŞ MƏNTİQİ VƏ YENİ QEYD XANASI
+    // WHATSAPP İLƏ ÜMUMİ HESABAT GÖNDƏR
+    document.getElementById('btnWhatsAppShare').addEventListener('click', () => {
+        if(currentArchiveData.length === 0) return;
+        
+        let textMsg = `*🎙️ Natamam Podcast - Rəsmi Hesabat*\n📅 Seçilmiş Ay: ${monthFilterInput.value}\n\n`;
+        
+        if (currentTab === 'visits') {
+            textMsg += `*📍 ÇƏKİLİŞ MƏKANLARI*\n\n`;
+            currentArchiveData.forEach(item => {
+                textMsg += `Məkan: ${item.location}\n⏱ Müddət: ${item.duration_spent || 'Davam edir'}\n🗓 Tarix: ${item.checkIn_Time}\n----------------\n`;
+            });
+            textMsg += `\nÜmumi Müddət: ${document.getElementById('sumTime').textContent}`;
+        } else {
+            textMsg += `*💰 ÖDƏNİŞ QEYDLƏRİ*\n\n`;
+            currentArchiveData.forEach(item => {
+                const t = item.payment_type === 'monthly' ? `Aylıq (${item.paid_for_month})` : 'Gündəlik';
+                textMsg += `Məbləğ: ${item.amount} AZN\nNöv: ${t}\nÖdəyən: ${item.payer}\nQəbul edən: ${item.receiver}\n🗓 Tarix: ${item.created_at}\n----------------\n`;
+            });
+            textMsg += `\nCəmi Ödəniş: ${document.getElementById('sumMoney').textContent}`;
+        }
+
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textMsg)}`, '_blank');
+    });
+
+    // ÖDƏNİŞ
     const paymentRadios = document.getElementsByName('paymentType');
     const monthSelector = document.getElementById('monthSelector');
-    const paymentMonth = document.getElementById('paymentMonth');
-    const receiverName = document.getElementById('receiverName');
-    const paymentAmount = document.getElementById('paymentAmount');
-    const paymentNote = document.getElementById('paymentNote'); // Yeni əlavə edildi
-    const btnSavePayment = document.getElementById('btnSavePayment');
-
+    
     paymentRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
             e.target.value === 'monthly' ? monthSelector.classList.remove('hidden') : monthSelector.classList.add('hidden');
         });
     });
 
-    btnSavePayment.addEventListener('click', async () => {
+    document.getElementById('btnSavePayment').addEventListener('click', async () => {
         const type = document.querySelector('input[name="paymentType"]:checked').value;
-        const amount = paymentAmount.value.trim();
+        const amount = document.getElementById('paymentAmount').value.trim();
         const payer = payerName.value.trim();
-        const receiver = receiverName.value.trim();
-        const note = paymentNote.value.trim(); // Qeyd dəyəri alındı
+        const receiver = document.getElementById('receiverName').value.trim();
+        const note = document.getElementById('paymentNote').value.trim();
 
-        // Əsas xanalar məcburidir, qeyd isə yox
-        if (!payer || !receiver || !amount) { alert("Xahiş edirik, məbləği və şəxsləri qeyd edin (Qeyd hissəsi istisna olmaqla)."); return; }
+        if (!payer || !receiver || !amount) { alert("Xahiş edirik, məbləği və şəxsləri qeyd edin."); return; }
 
         let paymentData = {
-            amount: amount, 
-            payer: payer, 
-            receiver: receiver,
-            payment_type: type, 
-            created_at: new Date().toLocaleString('az-AZ'), 
-            timestamp: Date.now(),
-            recorded_by: currentUserDisplayName
+            amount: amount, payer: payer, receiver: receiver, payment_type: type, 
+            created_at: new Date().toLocaleString('az-AZ'), timestamp: Date.now(), recorded_by: currentUserDisplayName
         };
-
         if (type === 'monthly') {
-            if (!paymentMonth.value) { alert("Zəhmət olmasa ayı seçin."); return; }
-            paymentData.paid_for_month = paymentMonth.value;
+            if (!document.getElementById('paymentMonth').value) { alert("Zəhmət olmasa ayı seçin."); return; }
+            paymentData.paid_for_month = document.getElementById('paymentMonth').value;
         }
-
-        // Qeyd boş deyilsə, onu da bazaya yaz
-        if (note) {
-            paymentData.note = note;
-        }
+        if (note) paymentData.note = note;
 
         try {
-            btnSavePayment.disabled = true;
-            btnSavePayment.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saxlanılır...';
+            document.getElementById('btnSavePayment').disabled = true; document.getElementById('btnSavePayment').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
             await addDoc(collection(db, "payments"), paymentData);
-            alert("Ödəniş uğurla qeydə alındı!");
-            
-            // Xanaları sıfırla
-            paymentAmount.value = ''; 
-            paymentMonth.value = ''; 
-            receiverName.value = '';
-            paymentNote.value = ''; 
-            
-            btnSavePayment.disabled = false; 
-            btnSavePayment.textContent = "Ödənişi Yadda Saxla";
+            alert("Ödəniş qeydə alındı!");
+            document.getElementById('paymentAmount').value = ''; document.getElementById('paymentMonth').value = ''; document.getElementById('receiverName').value = ''; document.getElementById('paymentNote').value = ''; 
+            document.getElementById('btnSavePayment').disabled = false; document.getElementById('btnSavePayment').textContent = "Ödənişi Yadda Saxla";
         } catch (e) {
-            console.error(e); 
-            alert("Ödənişi yadda saxlamaq mümkün olmadı.");
-            btnSavePayment.disabled = false; 
-            btnSavePayment.textContent = "Ödənişi Yadda Saxla";
+            alert("Xəta!"); document.getElementById('btnSavePayment').disabled = false; document.getElementById('btnSavePayment').textContent = "Ödənişi Yadda Saxla";
         }
     });
 </script>
